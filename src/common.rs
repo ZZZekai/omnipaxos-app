@@ -27,7 +27,7 @@ pub mod messages {
     #[derive(Clone, Debug, Serialize, Deserialize)]
     pub enum ServerMessage {
         Write(CommandId),
-        Read(CommandId, Option<String>),
+        Read(CommandId, Option<serde_json::Value>),
         StartSignal(Timestamp),
     }
 
@@ -45,12 +45,14 @@ pub mod messages {
 pub mod kv {
     use omnipaxos::{macros::Entry, storage::Snapshot};
     use serde::{Deserialize, Serialize};
+    use serde_json::Value;
     use std::collections::HashMap;
 
     pub type CommandId = usize;
     pub type ClientId = u64;
     pub type NodeId = omnipaxos::util::NodeId;
     pub type InstanceId = NodeId;
+    pub type KVValue = Value;
 
     #[derive(Debug, Clone, Entry, Serialize, Deserialize)]
     pub struct Command {
@@ -62,14 +64,15 @@ pub mod kv {
 
     #[derive(Debug, Clone, Serialize, Deserialize)]
     pub enum KVCommand {
-        Put(String, String),
-        Delete(String),
+        Put(String, KVValue),
         Get(String),
+        Cas(String, KVValue, KVValue),
+        Delete(String),
     }
 
     #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct KVSnapshot {
-        snapshotted: HashMap<String, String>,
+        snapshotted: HashMap<String, KVValue>,
         deleted_keys: Vec<String>,
     }
 
@@ -77,6 +80,7 @@ pub mod kv {
         fn create(entries: &[Command]) -> Self {
             let mut snapshotted = HashMap::new();
             let mut deleted_keys: Vec<String> = Vec::new();
+
             for e in entries {
                 match &e.kv_cmd {
                     KVCommand::Put(key, value) => {
@@ -84,15 +88,23 @@ pub mod kv {
                     }
                     KVCommand::Delete(key) => {
                         if snapshotted.remove(key).is_none() {
-                            // key was not in the snapshot
                             deleted_keys.push(key.clone());
                         }
                     }
-                    KVCommand::Get(_) => (),
+                    KVCommand::Cas(key, expected, new_value) => {
+                        match snapshotted.get(key) {
+                            Some(current) if current == expected => {
+                                snapshotted.insert(key.clone(), new_value.clone());
+                            }
+                            _ => {}
+                        }
+                    }
+                    KVCommand::Get(_) => {}
                 }
             }
-            // remove keys that were put back
+
             deleted_keys.retain(|k| !snapshotted.contains_key(k));
+
             Self {
                 snapshotted,
                 deleted_keys,
@@ -113,7 +125,9 @@ pub mod kv {
             true
         }
     }
-}
+}  
+        
+    
 
 pub mod utils {
     use super::messages::*;
