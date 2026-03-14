@@ -6,13 +6,14 @@ use omnipaxos::{
     ServerConfig as OmniServerConfig,
 };
 use omnipaxos_kv::common::kv::{Command, CommandId, KVCommand, NodeId};
-use omnipaxos_storage::memory_storage::MemoryStorage;
+use omnipaxos_storage::persistent_storage::{PersistentStorage, PersistentStorageConfig};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::{self, BufRead, Write};
 
-type OmniPaxosInstance = OmniPaxos<Command, MemoryStorage<Command>>;
+// ★ 改为 PersistentStorage
+type OmniPaxosInstance = OmniPaxos<Command, PersistentStorage<Command>>;
 
 const LEADER_NAME: &str = "n0";
 
@@ -170,6 +171,7 @@ impl Node {
         self.id == LEADER_NAME
     }
 
+    // ★ 核心改动：使用 PersistentStorage，路径按节点 ID 区分
     fn init_omnipaxos(&mut self, all_node_names: &[String]) {
         let nodes: Vec<NodeId> = all_node_names
             .iter()
@@ -189,9 +191,48 @@ impl Node {
             cluster_config,
             server_config,
         };
-        let storage: MemoryStorage<Command> = MemoryStorage::default();
+
+        // ★ 每个节点用独立路径存储，重启后自动恢复
+        let storage_path = format!("./storage_{}", self.id);
+        eprintln!("{}: using persistent storage at {}", self.id, storage_path);
+        let storage_config = PersistentStorageConfig::with(storage_path);
+        let storage = PersistentStorage::open(storage_config);
+
         let op = config.build(storage).expect("failed to build OmniPaxos");
         self.omnipaxos = Some(op);
+
+        // ★ 重启后从 log 重放已决议的命令，重建内存数据库
+        self.recover_db_from_log();
+    }
+
+    // ★ 新增：重放 log 重建 DB（重启恢复用）
+    fn recover_db_from_log(&mut self) {
+        let op = self.omnipaxos.as_mut().expect("OmniPaxos not initialized");
+        let decided_idx = op.get_decided_idx();
+
+        if decided_idx == 0 {
+            eprintln!("{}: fresh start, no log to recover", self.id);
+            return;
+        }
+
+        eprintln!("{}: recovering {} decided entries from log", self.id, decided_idx);
+
+        let entries = match op.read_decided_suffix(0) {
+            Some(e) => e,
+            None => {
+                eprintln!("{}: read_decided_suffix(0) returned None", self.id);
+                return;
+            }
+        };
+
+        for entry in entries {
+            if let LogEntry::Decided(cmd) = entry {
+                self.db.apply(cmd.kv_cmd);
+            }
+        }
+
+        self.current_decided_idx = decided_idx;
+        eprintln!("{}: recovery complete, decided_idx={}", self.id, decided_idx);
     }
 
     fn start_leader_once(&mut self) {
@@ -202,6 +243,7 @@ impl Node {
             self.leader_started = true;
         }
     }
+
     fn ensure_leader_ready(&mut self) {
         if !self.is_leader_node() {
             return;
@@ -227,7 +269,6 @@ impl Node {
         }
     }
 
-
     fn progress_local(&mut self, out: &mut impl Write) {
         if self.is_leader_node() {
             self.ensure_leader_ready();
@@ -246,14 +287,13 @@ impl Node {
         self.handle_decided_entries(out);
     }
 
-
     fn flush_outgoing(&mut self, out: &mut impl Write) {
         let op = self.omnipaxos.as_mut().expect("OmniPaxos not initialized");
         let mut outgoing = Vec::new();
         op.take_outgoing_messages(&mut outgoing);
 
-        if !outgoing.is_empty(){
-            eprintln!("{}outgoing msgs : {}", self.id, outgoing.len());
+        if !outgoing.is_empty() {
+            eprintln!("{} outgoing msgs: {}", self.id, outgoing.len());
         }
 
         for msg in outgoing {

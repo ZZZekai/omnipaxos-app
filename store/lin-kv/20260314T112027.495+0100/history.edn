@@ -1,0 +1,98 @@
+{:index 0, :time 14723800, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 1, :time 30664900, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 2, :time 32951300, :type :invoke, :process 1, :f :cas, :value [0 [4 1]]}
+{:index 3, :time 36833100, :type :fail, :process 1, :f :cas, :value [0 [4 1]], :error [:key-does-not-exist "key does not exist"]}
+{:index 4, :time 176382900, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 5, :time 188901600, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 6, :time 286975300, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 7, :time 297221600, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 8, :time 297383300, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 9, :time 304032700, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 10, :time 446790300, :type :invoke, :process 1, :f :cas, :value [0 [2 2]]}
+{:index 11, :time 458303400, :type :fail, :process 1, :f :cas, :value [0 [2 2]], :error [:key-does-not-exist "key does not exist"]}
+{:index 12, :time 764769100, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 13, :time 777412100, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 14, :time 859770400, :type :invoke, :process 1, :f :cas, :value [0 [0 0]]}
+{:index 15, :time 871337900, :type :fail, :process 1, :f :cas, :value [0 [0 0]], :error [:key-does-not-exist "key does not exist"]}
+{:index 16, :time 1003446400, :type :invoke, :process 1, :f :cas, :value [0 [3 4]]}
+{:index 17, :time 1018750600, :type :fail, :process 1, :f :cas, :value [0 [3 4]], :error [:key-does-not-exist "key does not exist"]}
+{:index 18, :time 1115898700, :type :invoke, :process 1, :f :cas, :value [0 [4 2]]}
+{:index 19, :time 1126782200, :type :fail, :process 1, :f :cas, :value [0 [4 2]], :error [:key-does-not-exist "key does not exist"]}
+{:index 20, :time 1452004000, :type :invoke, :process 1, :f :cas, :value [0 [4 0]]}
+{:index 21, :time 1462138500, :type :fail, :process 1, :f :cas, :value [0 [4 0]], :error [:key-does-not-exist "key does not exist"]}
+{:index 22, :time 1547911300, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 23, :time 1552734400, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 24, :time 1769927100, :type :invoke, :process 1, :f :cas, :value [0 [0 1]]}
+{:index 25, :time 1777356100, :type :fail, :process 1, :f :cas, :value [0 [0 1]], :error [:key-does-not-exist "key does not exist"]}
+{:index 26, :time 2181163200, :type :invoke, :process 1, :f :cas, :value [0 [1 0]]}
+{:index 27, :time 2192327500, :type :fail, :process 1, :f :cas, :value [0 [1 0]], :error [:key-does-not-exist "key does not exist"]}
+{:index 28, :time 2468256800, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 29, :time 2473412100, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 30, :time 2818617100, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 31, :time 2831305500, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 32, :time 3074173100, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 33, :time 3086011300, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 34, :time 3153451900, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 35, :time 3164661900, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 36, :time 3376694200, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 37, :time 3384608300, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 38, :time 3742341800, :type :invoke, :process 1, :f :cas, :value [0 [4 0]]}
+{:index 39, :time 3754017500, :type :fail, :process 1, :f :cas, :value [0 [4 0]], :error [:key-does-not-exist "key does not exist"]}
+{:index 40, :time 3869956700, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 41, :time 3881372600, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 42, :time 4236314300, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 43, :time 4243156200, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 44, :time 4538941500, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 45, :time 4548052000, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 46, :time 4570368900, :type :invoke, :process 1, :f :cas, :value [0 [1 0]]}
+{:index 47, :time 4573880900, :type :fail, :process 1, :f :cas, :value [0 [1 0]], :error [:key-does-not-exist "key does not exist"]}
+{:index 48, :time 4951490300, :type :invoke, :process 1, :f :cas, :value [0 [4 3]]}
+{:index 49, :time 4958767900, :type :fail, :process 1, :f :cas, :value [0 [4 3]], :error [:key-does-not-exist "key does not exist"]}
+{:index 50, :time 5254366400, :type :invoke, :process 1, :f :write, :value [0 0]}
+{:index 51, :time 5266544800, :type :ok, :process 1, :f :write, :value [0 0]}
+{:index 52, :time 5635674100, :type :invoke, :process 1, :f :cas, :value [0 [2 4]]}
+{:index 53, :time 5642689300, :type :fail, :process 1, :f :cas, :value [0 [2 4]], :error [:precondition-failed "precondition failed"]}
+{:index 54, :time 6035314400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 55, :time 6046390100, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 56, :time 6339143400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 57, :time 6352070000, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 58, :time 6450206900, :type :invoke, :process 1, :f :cas, :value [0 [3 4]]}
+{:index 59, :time 6460432100, :type :fail, :process 1, :f :cas, :value [0 [3 4]], :error [:precondition-failed "precondition failed"]}
+{:index 60, :time 6642107500, :type :invoke, :process 1, :f :cas, :value [0 [4 3]]}
+{:index 61, :time 6652870100, :type :fail, :process 1, :f :cas, :value [0 [4 3]], :error [:precondition-failed "precondition failed"]}
+{:index 62, :time 6912627500, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 63, :time 6921726400, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 64, :time 7071568800, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 65, :time 7082760900, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 66, :time 7150484400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 67, :time 7159288900, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 68, :time 7499712800, :type :invoke, :process 1, :f :write, :value [0 4]}
+{:index 69, :time 7509787000, :type :ok, :process 1, :f :write, :value [0 4]}
+{:index 70, :time 7769287300, :type :invoke, :process 1, :f :cas, :value [0 [3 0]]}
+{:index 71, :time 7775013400, :type :fail, :process 1, :f :cas, :value [0 [3 0]], :error [:precondition-failed "precondition failed"]}
+{:index 72, :time 8071951900, :type :invoke, :process 1, :f :cas, :value [0 [1 1]]}
+{:index 73, :time 8082658500, :type :fail, :process 1, :f :cas, :value [0 [1 1]], :error [:precondition-failed "precondition failed"]}
+{:index 74, :time 8327415400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 75, :time 8339252000, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 76, :time 8454176100, :type :invoke, :process 1, :f :cas, :value [0 [2 2]]}
+{:index 77, :time 8463365000, :type :fail, :process 1, :f :cas, :value [0 [2 2]], :error [:precondition-failed "precondition failed"]}
+{:index 78, :time 8836286700, :type :invoke, :process 1, :f :cas, :value [0 [3 2]]}
+{:index 79, :time 8846878300, :type :fail, :process 1, :f :cas, :value [0 [3 2]], :error [:precondition-failed "precondition failed"]}
+{:index 80, :time 9121807700, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 81, :time 9131720500, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 82, :time 9232802400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 83, :time 9243553400, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 84, :time 9408045000, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 85, :time 9419728700, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 86, :time 9567740300, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 87, :time 9579689500, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 88, :time 9663415800, :type :invoke, :process 1, :f :cas, :value [0 [2 0]]}
+{:index 89, :time 9674039700, :type :fail, :process 1, :f :cas, :value [0 [2 0]], :error [:precondition-failed "precondition failed"]}
+{:index 90, :time 9695012600, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 91, :time 9702876500, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 92, :time 9790723400, :type :invoke, :process 1, :f :cas, :value [0 [2 2]]}
+{:index 93, :time 9797905400, :type :fail, :process 1, :f :cas, :value [0 [2 2]], :error [:precondition-failed "precondition failed"]}
+{:index 94, :time 9934127500, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 95, :time 9945004500, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 96, :time 9997847300, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 97, :time 10004484500, :type :ok, :process 0, :f :read, :value [0 4]}

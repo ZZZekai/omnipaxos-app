@@ -1,0 +1,619 @@
+2026-03-14 11:20:27,570{GMT}	INFO	[jepsen test runner] jepsen.core: Test version e0ff92ff78176b78d4da1b0ffb8afc4be0fa2c31 (plus uncommitted changes)
+2026-03-14 11:20:27,570{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --workload lin-kv --bin "D:\\java tool\\IDEA project\\omnipaxos-app\\target\\debug\\server.exe" --node-count 1 --concurrency 2 --time-limit 10
+2026-03-14 11:20:27,618{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:args []
+ :remote
+ #jepsen.control.retry.Remote{:remote #jepsen.control.scp.Remote{:cmd-remote #jepsen.control.sshj.SSHJRemote{:concurrency-limit 6,
+                                                                                                             :conn-spec nil,
+                                                                                                             :client nil,
+                                                                                                             :semaphore nil},
+                                                                 :conn-spec nil},
+                              :conn nil}
+ :log-net-send false
+ :node-count 1
+ :availability nil
+ :max-txn-length 4
+ :concurrency 2
+ :db
+ #object[maelstrom.db$db$reify__16612
+         "0x428943a4"
+         "maelstrom.db$db$reify__16612@428943a4"]
+ :max-writes-per-key 16
+ :leave-db-running? false
+ :name "lin-kv"
+ :logging-json? false
+ :start-time
+ #object[org.joda.time.DateTime "0x73534675" "2026-03-14T11:20:27.495+01:00"]
+ :nemesis-interval 10
+ :net
+ #object[maelstrom.net$jepsen_net$reify__15721
+         "0x550482aa"
+         "maelstrom.net$jepsen_net$reify__15721@550482aa"]
+ :client
+ #object[maelstrom.workload.lin_kv$client$reify__20973
+         "0x2b7b6f58"
+         "maelstrom.workload.lin_kv$client$reify__20973@2b7b6f58"]
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x2dc4b58a"
+         "java.util.concurrent.CyclicBarrier@2dc4b58a"]
+ :log-stderr false
+ :pure-generators true
+ :ssh {:dummy? true}
+ :rate 5
+ :checker
+ #object[jepsen.checker$compose$reify__11089
+         "0x44cd3ea9"
+         "jepsen.checker$compose$reify__11089@44cd3ea9"]
+ :argv
+ ("test"
+  "--workload"
+  "lin-kv"
+  "--bin"
+  "D:\\java tool\\IDEA project\\omnipaxos-app\\target\\debug\\server.exe"
+  "--node-count"
+  "1"
+  "--concurrency"
+  "2"
+  "--time-limit"
+  "10")
+ :nemesis
+ (jepsen.nemesis.ReflCompose
+  {:fm {:start-partition 0,
+        :stop-partition 0,
+        :kill 1,
+        :start 1,
+        :pause 1,
+        :resume 1},
+   :nemeses [#unprintable "jepsen.nemesis.combined$partition_nemesis$reify__16905@352df548"
+             #unprintable "jepsen.nemesis.combined$db_nemesis$reify__16886@45dc4d1a"]})
+ :nodes ["n0"]
+ :test-count 1
+ :latency {:mean 0, :dist :constant}
+ :bin "D:\\java tool\\IDEA project\\omnipaxos-app\\target\\debug\\server.exe"
+ :generator
+ #object[jepsen.util.Forgettable
+         "0x2495a351"
+         (jepsen.generator.TimeLimit
+          {:limit 10000000000,
+           :cutoff nil,
+           :gen (jepsen.generator.Any
+                 {:gens [(jepsen.generator.OnThreads
+                          {:f #{:nemesis},
+                           :context-filter #object[jepsen.generator.context$make_thread_filter$lazy_filter__12077
+                                                   "0x2f9a7d6f"
+                                                   "jepsen.generator.context$make_thread_filter$lazy_filter__12077@2f9a7d6f"],
+                           :gen nil})
+                         (jepsen.generator.OnThreads
+                          {:f #jepsen.generator.context.AllBut{:element :nemesis},
+                           :context-filter #object[jepsen.generator.context$make_thread_filter$lazy_filter__12077
+                                                   "0x3f96ef2"
+                                                   "jepsen.generator.context$make_thread_filter$lazy_filter__12077@3f96ef2"],
+                           :gen (jepsen.generator.Stagger
+                                 {:dt 400000000,
+                                  :next-time nil,
+                                  :gen (jepsen.generator.OnThreads
+                                        {:f #jepsen.generator.context.AllBut{:element :nemesis},
+                                         :context-filter #object[jepsen.generator.context$make_thread_filter$lazy_filter__12077
+                                                                 "0x12039ae0"
+                                                                 "jepsen.generator.context$make_thread_filter$lazy_filter__12077@12039ae0"],
+                                         :gen (jepsen.independent.ConcurrentGenerator
+                                               {:n 2,
+                                                :fgen #object[jepsen.tests.linearizable_register$test$fn__17385
+                                                              "0x1fb320de"
+                                                              "jepsen.tests.linearizable_register$test$fn__17385@1fb320de"],
+                                                :group->threads nil,
+                                                :thread->group nil,
+                                                :group->context-filter nil,
+                                                :keys (0 1 2 3 4 5 6 7 ...),
+                                                :gens nil})})})})]})})]
+ :log-net-recv false
+ :os
+ #object[maelstrom.net$jepsen_os$reify__15724
+         "0x2bf83b29"
+         "maelstrom.net$jepsen_os$reify__15724@2bf83b29"]
+ :time-limit 10
+ :workload :lin-kv
+ :consistency-models [:strict-serializable]
+ :topology :grid}
+
+2026-03-14 11:20:28,712{GMT}	INFO	[jepsen node n0] maelstrom.net: Starting Maelstrom network
+2026-03-14 11:20:28,728{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2026-03-14 11:20:28,728{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2026-03-14 11:20:28,728{GMT}	INFO	[jepsen node n0] maelstrom.service: Starting services: (lin-kv lin-tso lww-kv seq-kv)
+2026-03-14 11:20:28,728{GMT}	INFO	[jepsen node n0] maelstrom.db: Setting up n0
+2026-03-14 11:20:28,728{GMT}	INFO	[jepsen node n0] maelstrom.process: launching D:\java tool\IDEA project\omnipaxos-app\target\debug\server.exe []
+2026-03-14 11:20:28,741{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2026-03-14 11:20:28,773{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:28,778{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:28,789{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [4 1]]
+2026-03-14 11:20:28,789{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [4 1]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:28,932{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:28,936{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:29,043{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:29,052{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:29,056{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:29,058{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:29,204{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [2 2]]
+2026-03-14 11:20:29,212{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [2 2]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:29,521{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:29,533{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:29,615{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [0 0]]
+2026-03-14 11:20:29,624{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [0 0]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:29,759{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [3 4]]
+2026-03-14 11:20:29,770{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [3 4]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:29,872{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [4 2]]
+2026-03-14 11:20:29,881{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [4 2]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:30,208{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [4 0]]
+2026-03-14 11:20:30,208{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [4 0]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:30,303{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:30,303{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:30,526{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [0 1]]
+2026-03-14 11:20:30,526{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [0 1]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:30,938{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [1 0]]
+2026-03-14 11:20:30,947{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [1 0]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:31,224{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:31,224{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:31,574{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:31,585{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:31,830{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:31,841{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:31,909{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:31,920{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:32,134{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:32,139{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:32,499{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [4 0]]
+2026-03-14 11:20:32,509{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [4 0]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:32,625{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:32,636{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:32,992{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:32,997{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:33,294{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:33,302{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:33,326{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [1 0]]
+2026-03-14 11:20:33,326{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [1 0]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:33,709{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [4 3]]
+2026-03-14 11:20:33,713{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [4 3]]	[:key-does-not-exist "key does not exist"]
+2026-03-14 11:20:34,013{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:write	[0 0]
+2026-03-14 11:20:34,022{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:write	[0 0]
+2026-03-14 11:20:34,391{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [2 4]]
+2026-03-14 11:20:34,391{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [2 4]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:34,792{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:34,802{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 0]
+2026-03-14 11:20:35,095{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:35,105{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 0]
+2026-03-14 11:20:35,206{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [3 4]]
+2026-03-14 11:20:35,215{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [3 4]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:35,398{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [4 3]]
+2026-03-14 11:20:35,398{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [4 3]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:35,670{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:35,675{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 0]
+2026-03-14 11:20:35,829{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:35,836{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 0]
+2026-03-14 11:20:35,906{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:35,906{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 0]
+2026-03-14 11:20:36,255{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:write	[0 4]
+2026-03-14 11:20:36,264{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:write	[0 4]
+2026-03-14 11:20:36,525{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [3 0]]
+2026-03-14 11:20:36,525{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [3 0]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:36,828{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [1 1]]
+2026-03-14 11:20:36,837{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [1 1]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:37,083{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:37,093{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 4]
+2026-03-14 11:20:37,210{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [2 2]]
+2026-03-14 11:20:37,218{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [2 2]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:37,592{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [3 2]]
+2026-03-14 11:20:37,592{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [3 2]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:37,877{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:37,887{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 4]
+2026-03-14 11:20:37,988{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:37,998{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 4]
+2026-03-14 11:20:38,166{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:38,175{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 4]
+2026-03-14 11:20:38,323{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:38,335{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 4]
+2026-03-14 11:20:38,419{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [2 0]]
+2026-03-14 11:20:38,429{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [2 0]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:38,451{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:38,455{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 4]
+2026-03-14 11:20:38,546{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:cas	[0 [2 2]]
+2026-03-14 11:20:38,549{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:cas	[0 [2 2]]	[:precondition-failed "precondition failed"]
+2026-03-14 11:20:38,691{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:38,700{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 4]
+2026-03-14 11:20:38,753{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 11:20:38,758{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[0 4]
+2026-03-14 11:20:38,769{GMT}	INFO	[jepsen test runner] jepsen.core: Run complete, writing
+2026-03-14 11:20:38,798{GMT}	INFO	[jepsen node n0] maelstrom.db: Tearing down n0
+2026-03-14 11:20:39,786{GMT}	INFO	[jepsen node n0] maelstrom.net: Shutting down Maelstrom network
+2026-03-14 11:20:39,788{GMT}	INFO	[jepsen test runner] jepsen.core: Analyzing...
+2026-03-14 11:20:39,853{GMT}	WARN	[clojure-agent-send-off-pool-3] jepsen.checker: Error while checking history:
+java.lang.IllegalStateException: Error rendering plot, verify gnuplot is installed and reachable
+	at jepsen.checker.perf$plot_BANG_.invokeStatic(perf.clj:494)
+	at jepsen.checker.perf$plot_BANG_.invoke(perf.clj:431)
+	at jepsen.checker.perf$point_graph_BANG_.invokeStatic(perf.clj:525)
+	at jepsen.checker.perf$point_graph_BANG_.invoke(perf.clj:498)
+	at jepsen.checker$latency_graph$reify__11306.check(checker.clj:832)
+	at jepsen.checker$check_safe.invokeStatic(checker.clj:88)
+	at jepsen.checker$check_safe.invoke(checker.clj:80)
+	at jepsen.checker$compose$reify__11089$fn__11091.invoke(checker.clj:104)
+	at clojure.core$pmap$fn__8582$fn__8583.invoke(core.clj:7169)
+	at clojure.core$binding_conveyor_fn$fn__5842.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.io.IOException: Cannot run program "gnuplot": CreateProcess error=2, 系统找不到指定的文件。
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1143)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1073)
+	at java.base/java.lang.Runtime.exec(Runtime.java:594)
+	at clojure.java.shell$sh.invokeStatic(shell.clj:113)
+	at clojure.java.shell$sh.doInvoke(shell.clj:79)
+	at clojure.lang.RestFn.invoke(RestFn.java:515)
+	at gnuplot.core$run_BANG_.invokeStatic(core.clj:76)
+	at gnuplot.core$run_BANG_.invoke(core.clj:66)
+	at gnuplot.core$raw_plot_BANG_.invokeStatic(core.clj:106)
+	at gnuplot.core$raw_plot_BANG_.invoke(core.clj:91)
+	... 15 common frames omitted
+Caused by: java.io.IOException: CreateProcess error=2, 系统找不到指定的文件。
+	at java.base/java.lang.ProcessImpl.create(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:505)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:158)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1110)
+	... 24 common frames omitted
+2026-03-14 11:20:39,853{GMT}	WARN	[clojure-agent-send-off-pool-9] jepsen.checker: Error while checking history:
+java.lang.IllegalStateException: Error rendering plot, verify gnuplot is installed and reachable
+	at jepsen.checker.perf$plot_BANG_.invokeStatic(perf.clj:494)
+	at jepsen.checker.perf$plot_BANG_.invoke(perf.clj:431)
+	at jepsen.checker.perf$rate_graph_BANG_.invokeStatic(perf.clj:628)
+	at jepsen.checker.perf$rate_graph_BANG_.invoke(perf.clj:573)
+	at jepsen.checker$rate_graph$reify__11309.check(checker.clj:845)
+	at jepsen.checker$check_safe.invokeStatic(checker.clj:88)
+	at jepsen.checker$check_safe.invoke(checker.clj:80)
+	at jepsen.checker$compose$reify__11089$fn__11091.invoke(checker.clj:104)
+	at clojure.core$pmap$fn__8582$fn__8583.invoke(core.clj:7169)
+	at clojure.core$binding_conveyor_fn$fn__5842.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.io.IOException: Cannot run program "gnuplot": CreateProcess error=2, 系统找不到指定的文件。
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1143)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1073)
+	at java.base/java.lang.Runtime.exec(Runtime.java:594)
+	at clojure.java.shell$sh.invokeStatic(shell.clj:113)
+	at clojure.java.shell$sh.doInvoke(shell.clj:79)
+	at clojure.lang.RestFn.invoke(RestFn.java:515)
+	at gnuplot.core$run_BANG_.invokeStatic(core.clj:76)
+	at gnuplot.core$run_BANG_.invoke(core.clj:66)
+	at gnuplot.core$raw_plot_BANG_.invokeStatic(core.clj:106)
+	at gnuplot.core$raw_plot_BANG_.invoke(core.clj:91)
+	... 15 common frames omitted
+Caused by: java.io.IOException: CreateProcess error=2, 系统找不到指定的文件。
+	at java.base/java.lang.ProcessImpl.create(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:505)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:158)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1110)
+	... 24 common frames omitted
+2026-03-14 11:20:39,908{GMT}	INFO	[clojure-agent-send-pool-0] jepsen.independent: Wrote D:\java tool\IDEA project\omnipaxos-app\store\lin-kv\20260314T112027.495+0100\independent\0\results.edn
+2026-03-14 11:20:39,924{GMT}	INFO	[clojure-agent-send-pool-0] jepsen.independent: Wrote D:\java tool\IDEA project\omnipaxos-app\store\lin-kv\20260314T112027.495+0100\independent\0\history.edn
+2026-03-14 11:20:39,924{GMT}	INFO	[jepsen test runner] jepsen.core: Analysis complete
+2026-03-14 11:20:39,939{GMT}	INFO	[jepsen results] jepsen.store: Wrote D:\java tool\IDEA project\omnipaxos-app\store\lin-kv\20260314T112027.495+0100\results.edn
+2026-03-14 11:20:39,971{GMT}	INFO	[jepsen test runner] jepsen.core: {:perf {:latency-graph {:valid? :unknown,
+                        :error {:via [{:type java.lang.IllegalStateException,
+                                       :message "Error rendering plot, verify gnuplot is installed and reachable",
+                                       :at [jepsen.checker.perf$plot_BANG_
+                                            invokeStatic
+                                            "perf.clj"
+                                            494]}
+                                      {:type java.io.IOException,
+                                       :message "Cannot run program \"gnuplot\": CreateProcess error=2, 系统找不到指定的文件。",
+                                       :at [java.lang.ProcessBuilder
+                                            start
+                                            "ProcessBuilder.java"
+                                            1143]}
+                                      {:type java.io.IOException,
+                                       :message "CreateProcess error=2, 系统找不到指定的文件。",
+                                       :at [java.lang.ProcessImpl
+                                            create
+                                            "ProcessImpl.java"
+                                            -2]}],
+                                :trace [[java.lang.ProcessImpl
+                                         create
+                                         "ProcessImpl.java"
+                                         -2]
+                                        [java.lang.ProcessImpl
+                                         <init>
+                                         "ProcessImpl.java"
+                                         505]
+                                        [java.lang.ProcessImpl
+                                         start
+                                         "ProcessImpl.java"
+                                         158]
+                                        [java.lang.ProcessBuilder
+                                         start
+                                         "ProcessBuilder.java"
+                                         1110]
+                                        [java.lang.ProcessBuilder
+                                         start
+                                         "ProcessBuilder.java"
+                                         1073]
+                                        [java.lang.Runtime
+                                         exec
+                                         "Runtime.java"
+                                         594]
+                                        [clojure.java.shell$sh
+                                         invokeStatic
+                                         "shell.clj"
+                                         113]
+                                        [clojure.java.shell$sh
+                                         doInvoke
+                                         "shell.clj"
+                                         79]
+                                        [clojure.lang.RestFn
+                                         invoke
+                                         "RestFn.java"
+                                         515]
+                                        [gnuplot.core$run_BANG_
+                                         invokeStatic
+                                         "core.clj"
+                                         76]
+                                        [gnuplot.core$run_BANG_
+                                         invoke
+                                         "core.clj"
+                                         66]
+                                        [gnuplot.core$raw_plot_BANG_
+                                         invokeStatic
+                                         "core.clj"
+                                         106]
+                                        [gnuplot.core$raw_plot_BANG_
+                                         invoke
+                                         "core.clj"
+                                         91]
+                                        [jepsen.checker.perf$plot_BANG_
+                                         invokeStatic
+                                         "perf.clj"
+                                         494]
+                                        [jepsen.checker.perf$plot_BANG_
+                                         invoke
+                                         "perf.clj"
+                                         431]
+                                        [jepsen.checker.perf$point_graph_BANG_
+                                         invokeStatic
+                                         "perf.clj"
+                                         525]
+                                        [jepsen.checker.perf$point_graph_BANG_
+                                         invoke
+                                         "perf.clj"
+                                         498]
+                                        [jepsen.checker$latency_graph$reify__11306
+                                         check
+                                         "checker.clj"
+                                         832]
+                                        [jepsen.checker$check_safe
+                                         invokeStatic
+                                         "checker.clj"
+                                         88]
+                                        [jepsen.checker$check_safe
+                                         invoke
+                                         "checker.clj"
+                                         80]
+                                        [jepsen.checker$compose$reify__11089$fn__11091
+                                         invoke
+                                         "checker.clj"
+                                         104]
+                                        [clojure.core$pmap$fn__8582$fn__8583
+                                         invoke
+                                         "core.clj"
+                                         7169]
+                                        [clojure.core$binding_conveyor_fn$fn__5842
+                                         invoke
+                                         "core.clj"
+                                         2047]
+                                        [clojure.lang.AFn
+                                         call
+                                         "AFn.java"
+                                         18]
+                                        [java.util.concurrent.FutureTask
+                                         run
+                                         "FutureTask.java"
+                                         264]
+                                        [java.util.concurrent.ThreadPoolExecutor
+                                         runWorker
+                                         "ThreadPoolExecutor.java"
+                                         1136]
+                                        [java.util.concurrent.ThreadPoolExecutor$Worker
+                                         run
+                                         "ThreadPoolExecutor.java"
+                                         635]
+                                        [java.lang.Thread
+                                         run
+                                         "Thread.java"
+                                         840]],
+                                :cause "CreateProcess error=2, 系统找不到指定的文件。"}},
+        :rate-graph {:valid? :unknown,
+                     :error {:via [{:type java.lang.IllegalStateException,
+                                    :message "Error rendering plot, verify gnuplot is installed and reachable",
+                                    :at [jepsen.checker.perf$plot_BANG_
+                                         invokeStatic
+                                         "perf.clj"
+                                         494]}
+                                   {:type java.io.IOException,
+                                    :message "Cannot run program \"gnuplot\": CreateProcess error=2, 系统找不到指定的文件。",
+                                    :at [java.lang.ProcessBuilder
+                                         start
+                                         "ProcessBuilder.java"
+                                         1143]}
+                                   {:type java.io.IOException,
+                                    :message "CreateProcess error=2, 系统找不到指定的文件。",
+                                    :at [java.lang.ProcessImpl
+                                         create
+                                         "ProcessImpl.java"
+                                         -2]}],
+                             :trace [[java.lang.ProcessImpl
+                                      create
+                                      "ProcessImpl.java"
+                                      -2]
+                                     [java.lang.ProcessImpl
+                                      <init>
+                                      "ProcessImpl.java"
+                                      505]
+                                     [java.lang.ProcessImpl
+                                      start
+                                      "ProcessImpl.java"
+                                      158]
+                                     [java.lang.ProcessBuilder
+                                      start
+                                      "ProcessBuilder.java"
+                                      1110]
+                                     [java.lang.ProcessBuilder
+                                      start
+                                      "ProcessBuilder.java"
+                                      1073]
+                                     [java.lang.Runtime
+                                      exec
+                                      "Runtime.java"
+                                      594]
+                                     [clojure.java.shell$sh
+                                      invokeStatic
+                                      "shell.clj"
+                                      113]
+                                     [clojure.java.shell$sh
+                                      doInvoke
+                                      "shell.clj"
+                                      79]
+                                     [clojure.lang.RestFn
+                                      invoke
+                                      "RestFn.java"
+                                      515]
+                                     [gnuplot.core$run_BANG_
+                                      invokeStatic
+                                      "core.clj"
+                                      76]
+                                     [gnuplot.core$run_BANG_
+                                      invoke
+                                      "core.clj"
+                                      66]
+                                     [gnuplot.core$raw_plot_BANG_
+                                      invokeStatic
+                                      "core.clj"
+                                      106]
+                                     [gnuplot.core$raw_plot_BANG_
+                                      invoke
+                                      "core.clj"
+                                      91]
+                                     [jepsen.checker.perf$plot_BANG_
+                                      invokeStatic
+                                      "perf.clj"
+                                      494]
+                                     [jepsen.checker.perf$plot_BANG_
+                                      invoke
+                                      "perf.clj"
+                                      431]
+                                     [jepsen.checker.perf$rate_graph_BANG_
+                                      invokeStatic
+                                      "perf.clj"
+                                      628]
+                                     [jepsen.checker.perf$rate_graph_BANG_
+                                      invoke
+                                      "perf.clj"
+                                      573]
+                                     [jepsen.checker$rate_graph$reify__11309
+                                      check
+                                      "checker.clj"
+                                      845]
+                                     [jepsen.checker$check_safe
+                                      invokeStatic
+                                      "checker.clj"
+                                      88]
+                                     [jepsen.checker$check_safe
+                                      invoke
+                                      "checker.clj"
+                                      80]
+                                     [jepsen.checker$compose$reify__11089$fn__11091
+                                      invoke
+                                      "checker.clj"
+                                      104]
+                                     [clojure.core$pmap$fn__8582$fn__8583
+                                      invoke
+                                      "core.clj"
+                                      7169]
+                                     [clojure.core$binding_conveyor_fn$fn__5842
+                                      invoke
+                                      "core.clj"
+                                      2047]
+                                     [clojure.lang.AFn
+                                      call
+                                      "AFn.java"
+                                      18]
+                                     [java.util.concurrent.FutureTask
+                                      run
+                                      "FutureTask.java"
+                                      264]
+                                     [java.util.concurrent.ThreadPoolExecutor
+                                      runWorker
+                                      "ThreadPoolExecutor.java"
+                                      1136]
+                                     [java.util.concurrent.ThreadPoolExecutor$Worker
+                                      run
+                                      "ThreadPoolExecutor.java"
+                                      635]
+                                     [java.lang.Thread
+                                      run
+                                      "Thread.java"
+                                      840]],
+                             :cause "CreateProcess error=2, 系统找不到指定的文件。"}},
+        :valid? :unknown},
+ :timeline {:valid? true},
+ :exceptions {:valid? true},
+ :stats {:valid? false,
+         :count 49,
+         :ok-count 15,
+         :fail-count 34,
+         :info-count 0,
+         :by-f {:cas {:valid? false,
+                      :count 20,
+                      :ok-count 0,
+                      :fail-count 20,
+                      :info-count 0},
+                :read {:valid? true,
+                       :count 27,
+                       :ok-count 13,
+                       :fail-count 14,
+                       :info-count 0},
+                :write {:valid? true,
+                        :count 2,
+                        :ok-count 2,
+                        :fail-count 0,
+                        :info-count 0}}},
+ :availability {:valid? true, :ok-fraction 0.30612245},
+ :net {:all {:send-count 100,
+             :recv-count 100,
+             :msg-count 100,
+             :msgs-per-op 2.0408163},
+       :clients {:send-count 100, :recv-count 100, :msg-count 100},
+       :servers {:send-count 0,
+                 :recv-count 0,
+                 :msg-count 0,
+                 :msgs-per-op 0.0},
+       :valid? true},
+ :workload {:valid? true,
+            :results {0 {:linearizable {:valid? true,
+                                        :configs ({:model #knossos.model.CASRegister{:value 4},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 4,
+                                                             :index 97,
+                                                             :time 10004484500},
+                                                   :pending []}),
+                                        :final-paths ()},
+                         :timeline {:valid? true},
+                         :valid? true}},
+            :failures []},
+ :valid? false}
+
+
+Analysis invalid! (??益?）? ┻━┻

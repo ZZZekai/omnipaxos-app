@@ -1,0 +1,94 @@
+{:index 0, :time 5677500, :type :invoke, :process 1, :f :cas, :value [0 [3 0]]}
+{:index 1, :time 19856200, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 2, :time 21165100, :type :fail, :process 1, :f :cas, :value [0 [3 0]], :error [:key-does-not-exist "key does not exist"]}
+{:index 3, :time 23395300, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 4, :time 411450400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 5, :time 418153700, :type :fail, :process 0, :f :read, :value [0 nil], :error [:key-does-not-exist "key does not exist"]}
+{:index 6, :time 724670200, :type :invoke, :process 1, :f :cas, :value [0 [0 4]]}
+{:index 7, :time 729412900, :type :fail, :process 1, :f :cas, :value [0 [0 4]], :error [:key-does-not-exist "key does not exist"]}
+{:index 8, :time 1103821700, :type :invoke, :process 1, :f :write, :value [0 4]}
+{:index 9, :time 1110318600, :type :ok, :process 1, :f :write, :value [0 4]}
+{:index 10, :time 1341274000, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 11, :time 1345496300, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 12, :time 1381820400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 13, :time 1388017800, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 14, :time 1760980800, :type :invoke, :process 1, :f :cas, :value [0 [0 4]]}
+{:index 15, :time 1767830800, :type :fail, :process 1, :f :cas, :value [0 [0 4]], :error [:precondition-failed "precondition failed"]}
+{:index 16, :time 1924300300, :type :invoke, :process 1, :f :cas, :value [0 [1 3]]}
+{:index 17, :time 1931898700, :type :fail, :process 1, :f :cas, :value [0 [1 3]], :error [:precondition-failed "precondition failed"]}
+{:index 18, :time 2182313100, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 19, :time 2192744900, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 20, :time 2507800300, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 21, :time 2511730600, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 22, :time 2565735200, :type :invoke, :process 1, :f :cas, :value [0 [4 2]]}
+{:index 23, :time 2570427900, :type :ok, :process 1, :f :cas, :value [0 [4 2]]}
+{:index 24, :time 2849465700, :type :invoke, :process 1, :f :write, :value [0 3]}
+{:index 25, :time 2856135800, :type :ok, :process 1, :f :write, :value [0 3]}
+{:index 26, :time 3240028400, :type :invoke, :process 1, :f :cas, :value [0 [3 4]]}
+{:index 27, :time 3246909800, :type :ok, :process 1, :f :cas, :value [0 [3 4]]}
+{:index 28, :time 3364928200, :type :invoke, :process 1, :f :cas, :value [0 [3 4]]}
+{:index 29, :time 3369398000, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 30, :time 3370935900, :type :fail, :process 1, :f :cas, :value [0 [3 4]], :error [:precondition-failed "precondition failed"]}
+{:index 31, :time 3373407700, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 32, :time 3402268200, :type :invoke, :process 1, :f :cas, :value [0 [3 4]]}
+{:index 33, :time 3407492500, :type :fail, :process 1, :f :cas, :value [0 [3 4]], :error [:precondition-failed "precondition failed"]}
+{:index 34, :time 3649257800, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 35, :time 3656877300, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 36, :time 3698899400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 37, :time 3704222800, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 38, :time 3769152200, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 39, :time 3777880500, :type :ok, :process 0, :f :read, :value [0 4]}
+{:index 40, :time 4061162200, :type :invoke, :process 1, :f :write, :value [0 4]}
+{:index 41, :time 4072164100, :type :ok, :process 1, :f :write, :value [0 4]}
+{:index 42, :time 4283120400, :type :invoke, :process 1, :f :cas, :value [0 [3 0]]}
+{:index 43, :time 4287217300, :type :fail, :process 1, :f :cas, :value [0 [3 0]], :error [:precondition-failed "precondition failed"]}
+{:index 44, :time 4424234300, :type :invoke, :process 1, :f :write, :value [0 0]}
+{:index 45, :time 4430684500, :type :ok, :process 1, :f :write, :value [0 0]}
+{:index 46, :time 4693801800, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 47, :time 4697209300, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 48, :time 5077681700, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 49, :time 5086396100, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 50, :time 5477091400, :type :invoke, :process 1, :f :write, :value [0 0]}
+{:index 51, :time 5483761700, :type :ok, :process 1, :f :write, :value [0 0]}
+{:index 52, :time 5519782600, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 53, :time 5526078700, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 54, :time 5752193100, :type :invoke, :process 1, :f :cas, :value [0 [2 4]]}
+{:index 55, :time 5758874200, :type :fail, :process 1, :f :cas, :value [0 [2 4]], :error [:precondition-failed "precondition failed"]}
+{:index 56, :time 5973075700, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 57, :time 5983205300, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 58, :time 6148353600, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 59, :time 6158534900, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 60, :time 6348013900, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 61, :time 6355496600, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 62, :time 6464612100, :type :invoke, :process 1, :f :cas, :value [0 [1 2]]}
+{:index 63, :time 6471982800, :type :fail, :process 1, :f :cas, :value [0 [1 2]], :error [:precondition-failed "precondition failed"]}
+{:index 64, :time 6701972700, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 65, :time 6719690400, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 66, :time 6727338900, :type :invoke, :process 1, :f :write, :value [0 3]}
+{:index 67, :time 6730156600, :type :ok, :process 1, :f :write, :value [0 3]}
+{:index 68, :time 7007026400, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 69, :time 7014805400, :type :ok, :process 0, :f :read, :value [0 3]}
+{:index 70, :time 7152192100, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 71, :time 7155957500, :type :ok, :process 0, :f :read, :value [0 3]}
+{:index 72, :time 7273774000, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 73, :time 7280206500, :type :ok, :process 0, :f :read, :value [0 3]}
+{:index 74, :time 7444180400, :type :invoke, :process 1, :f :write, :value [0 2]}
+{:index 75, :time 7450253700, :type :ok, :process 1, :f :write, :value [0 2]}
+{:index 76, :time 7782785000, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 77, :time 7788134300, :type :ok, :process 0, :f :read, :value [0 2]}
+{:index 78, :time 7907027200, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 79, :time 7913377500, :type :ok, :process 0, :f :read, :value [0 2]}
+{:index 80, :time 8169234600, :type :invoke, :process 1, :f :write, :value [0 0]}
+{:index 81, :time 8185333500, :type :ok, :process 1, :f :write, :value [0 0]}
+{:index 82, :time 8431170300, :type :invoke, :process 1, :f :write, :value [0 0]}
+{:index 83, :time 8434340400, :type :ok, :process 1, :f :write, :value [0 0]}
+{:index 84, :time 8834743100, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 85, :time 8837296800, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 86, :time 9089754300, :type :invoke, :process 0, :f :read, :value [0 nil]}
+{:index 87, :time 9096110700, :type :ok, :process 0, :f :read, :value [0 0]}
+{:index 88, :time 9380814400, :type :invoke, :process 1, :f :cas, :value [0 [0 3]]}
+{:index 89, :time 9388746000, :type :ok, :process 1, :f :cas, :value [0 [0 3]]}
+{:index 90, :time 9556485600, :type :invoke, :process 1, :f :cas, :value [0 [1 3]]}
+{:index 91, :time 9562105500, :type :fail, :process 1, :f :cas, :value [0 [1 3]], :error [:precondition-failed "precondition failed"]}
+{:index 92, :time 9763907000, :type :invoke, :process 1, :f :write, :value [0 2]}
+{:index 93, :time 9769209900, :type :ok, :process 1, :f :write, :value [0 2]}

@@ -1,0 +1,4 @@
+KV Node started, waiting for Maelstrom lin-kv workload...
+Received operation: init
+Received operation: read
+Received operation: write

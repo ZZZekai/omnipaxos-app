@@ -1,0 +1,58 @@
+{:linearizable
+ {:valid? false,
+  :configs
+  ({:model {:value 2},
+    :last-op
+    {:process 5,
+     :type :ok,
+     :f :write,
+     :value 2,
+     :index 11,
+     :time 1259196400},
+    :pending
+    [{:process 0,
+      :type :invoke,
+      :f :read,
+      :value 4,
+      :index 12,
+      :time 1534524400}]}),
+  :final-paths
+  ([{:op
+     {:process 5,
+      :type :ok,
+      :f :write,
+      :value 2,
+      :index 11,
+      :time 1259196400},
+     :model {:value 2}}
+    {:op
+     {:process 0,
+      :type :ok,
+      :f :read,
+      :value 4,
+      :index 13,
+      :time 1542829100},
+     :model {:msg "can't read 4 from register 2"}}]),
+  :previous-ok
+  {:process 5,
+   :type :ok,
+   :f :write,
+   :value 2,
+   :index 11,
+   :time 1259196400},
+  :last-op
+  {:process 5,
+   :type :ok,
+   :f :write,
+   :value 2,
+   :index 11,
+   :time 1259196400},
+  :op
+  {:process 0,
+   :type :ok,
+   :f :read,
+   :value 4,
+   :index 13,
+   :time 1542829100}},
+ :timeline {:valid? true},
+ :valid? false}

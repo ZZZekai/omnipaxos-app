@@ -1,0 +1,22 @@
+{:index 0, :time 6804800, :type :info, :process :nemesis, :f :start-partition, :value :majority}
+{:index 2, :time 17648000, :type :info, :process :nemesis, :f :start-partition, :value [:isolated {"n1" #{"n2" "n0"}, "n2" #{"n1"}, "n0" #{"n1"}}]}
+{:index 481, :time 17909466800, :type :info, :process :nemesis, :f :stop-partition, :value nil}
+{:index 482, :time 17913040500, :type :info, :process :nemesis, :f :stop-partition, :value :network-healed}
+{:index 562, :time 20871139800, :type :info, :process :nemesis, :f :start-partition, :value :majorities-ring}
+{:index 563, :time 20878807400, :type :info, :process :nemesis, :f :start-partition, :value [:isolated {"n0" #{"n1"}, "n1" #{"n2"}, "n2" #{"n0"}}]}
+{:index 658, :time 29263781300, :type :info, :process :nemesis, :f :stop-partition, :value nil}
+{:index 660, :time 29277556500, :type :info, :process :nemesis, :f :stop-partition, :value :network-healed}
+{:index 1086, :time 44805995500, :type :info, :process :nemesis, :f :start-partition, :value :minority-third}
+{:index 1087, :time 44811729900, :type :info, :process :nemesis, :f :start-partition, :value [:isolated {"n2" #{}, "n1" #{}, "n0" #{}}]}
+{:index 1266, :time 51195776600, :type :info, :process :nemesis, :f :stop-partition, :value nil}
+{:index 1267, :time 51199042300, :type :info, :process :nemesis, :f :stop-partition, :value :network-healed}
+{:index 1370, :time 55184210600, :type :info, :process :nemesis, :f :start-partition, :value :majority}
+{:index 1371, :time 55192128000, :type :info, :process :nemesis, :f :start-partition, :value [:isolated {"n2" #{"n1" "n0"}, "n1" #{"n2"}, "n0" #{"n2"}}]}
+{:index 1419, :time 59599530000, :type :invoke, :process 142, :f :cas, :value [0 0]}
+{:index 1421, :time 59696976300, :type :invoke, :process 71, :f :write, :value 0}
+{:index 1423, :time 59809125900, :type :invoke, :process 1, :f :read, :value nil}
+{:index 1425, :time 59936497600, :type :invoke, :process 2, :f :read, :value nil}
+{:index 1428, :time 60620735900, :type :info, :process 142, :f :cas, :value [0 0], :error :net-timeout}
+{:index 1429, :time 60715848000, :type :info, :process 71, :f :write, :value 0, :error :net-timeout}
+{:index 1430, :time 60827467900, :type :fail, :process 1, :f :read, :value nil, :error :net-timeout}
+{:index 1431, :time 60956037100, :type :fail, :process 2, :f :read, :value nil, :error :net-timeout}
