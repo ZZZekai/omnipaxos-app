@@ -662,7 +662,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "omnipaxos-kv"
+name = "omnipaxos-app"
 version = "0.1.0"
 dependencies = [
  "chrono",
