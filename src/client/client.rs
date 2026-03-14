@@ -119,7 +119,7 @@ impl Client {
     async fn send_request(&mut self, is_write: bool) {
         let key = self.next_request_id.to_string();
         let cmd = match is_write {
-            true => KVCommand::Put(key.clone(), serde_json::Value::String(key.clone())),
+            true => KVCommand::Put(key.clone(), key.clone()),
             false => KVCommand::Get(key),
         };
         let request = ClientMessage::Append(self.next_request_id, cmd);

@@ -6,13 +6,13 @@ use omnipaxos::{
     ServerConfig as OmniServerConfig,
 };
 use omnipaxos_kv::common::kv::{Command, CommandId, KVCommand, NodeId};
-use omnipaxos_storage::memory_storage::MemoryStorage;
+use omnipaxos_storage::persistent_storage::{PersistentStorage, PersistentStorageConfig};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::{self, BufRead, Write};
 
-type OmniPaxosInstance = OmniPaxos<Command, MemoryStorage<Command>>;
+type OmniPaxosInstance = OmniPaxos<Command, PersistentStorage<Command>>;
 
 const LEADER_NAME: &str = "n0";
 
@@ -25,7 +25,7 @@ struct Message {
 
 #[derive(Default)]
 struct Database {
-    db: HashMap<String, Value>,
+    db: HashMap<String, String>,
 }
 
 enum ApplyResult {
@@ -45,7 +45,9 @@ impl Database {
                 ApplyResult::WriteOk
             }
             KVCommand::Get(key) => match self.db.get(&key) {
-                Some(v) => ApplyResult::ReadOk(v.clone()),
+                Some(v) => ApplyResult::ReadOk(
+                    serde_json::from_str(v).unwrap_or(serde_json::Value::String(v.clone()))
+                ),
                 None => ApplyResult::KeyNotFound,
             },
             KVCommand::Delete(key) => {
@@ -55,7 +57,9 @@ impl Database {
             KVCommand::Cas(key, expected, new_value) => match self.db.get(&key) {
                 None => ApplyResult::CasKeyNotFound,
                 Some(current) if *current != expected => {
-                    ApplyResult::CasPreconditionFailed(current.clone())
+                    ApplyResult::CasPreconditionFailed(
+                        serde_json::from_str(current).unwrap_or(serde_json::Value::String(current.clone()))
+                    )
                 }
                 Some(_) => {
                     self.db.insert(key, new_value);
@@ -176,6 +180,7 @@ impl Node {
             .map(|n| Self::parse_node_id(n))
             .collect();
 
+    // 1. 准备集群和服务器配置
         let cluster_config = OmniClusterConfig {
             configuration_id: 1,
             nodes,
@@ -185,11 +190,22 @@ impl Node {
             pid: self.pid,
             ..Default::default()
         };
+
+    // 2. 初始化持久化存储
+        let storage_path = format!("storage_{}", self.pid);
+        let storage_config = PersistentStorageConfig::with_path(storage_path);
+    
+        // 根据文档，使用 PersistentStorage::open
+        let storage = PersistentStorage::open(storage_config); 
+
+    // 3. 构建 OmniPaxosConfig
+    // 注意：这里我们直接把上面定义的 config 传进来，只创建一次，避免 Move 错误
         let config = OmniPaxosConfig {
             cluster_config,
             server_config,
         };
-        let storage: MemoryStorage<Command> = MemoryStorage::default();
+
+    // 4. 构建 OmniPaxos 实例并存入 self
         let op = config.build(storage).expect("failed to build OmniPaxos");
         self.omnipaxos = Some(op);
     }
@@ -251,11 +267,11 @@ impl Node {
         let op = self.omnipaxos.as_mut().expect("OmniPaxos not initialized");
         let mut outgoing = Vec::new();
         op.take_outgoing_messages(&mut outgoing);
-
+/*
         if !outgoing.is_empty(){
             eprintln!("{}outgoing msgs : {}", self.id, outgoing.len());
         }
-
+*/
         for msg in outgoing {
             let receiver = msg.get_receiver();
             let dest = Self::pid_to_node_name(receiver);
@@ -377,13 +393,13 @@ impl Node {
             "write" => {
                 let key = Self::key_to_string(&msg.body["key"]);
                 let value = msg.body["value"].clone();
-                KVCommand::Put(key, value)
+                KVCommand::Put(key, value.to_string())
             }
             "cas" => {
                 let key = Self::key_to_string(&msg.body["key"]);
                 let from = msg.body["from"].clone();
                 let to = msg.body["to"].clone();
-                KVCommand::Cas(key, from, to)
+                KVCommand::Cas(key, from.to_string(), to.to_string())
             }
             other => {
                 eprintln!("Unknown client message type: {}", other);
@@ -437,13 +453,13 @@ impl Node {
             "write" => {
                 let key = Self::key_to_string(&request_body["key"]);
                 let value = request_body["value"].clone();
-                (KVCommand::Put(key, value), None)
+                (KVCommand::Put(key, value.to_string()), None)
             }
             "cas" => {
                 let key = Self::key_to_string(&request_body["key"]);
                 let from = request_body["from"].clone();
                 let to = request_body["to"].clone();
-                (KVCommand::Cas(key, from.clone(), to), Some(from))
+                (KVCommand::Cas(key, from.to_string(), to.to_string()), Some(from))
             }
             other => {
                 eprintln!("Unknown proxy request type: {}", other);

@@ -2,6 +2,7 @@ pub mod messages {
     use omnipaxos::{messages::Message as OmniPaxosMessage, util::NodeId};
     use serde::{Deserialize, Serialize};
 
+    // 统一在这里导入需要的类型，避免重复
     use super::{
         kv::{Command, CommandId, KVCommand},
         utils::Timestamp,
@@ -27,7 +28,8 @@ pub mod messages {
     #[derive(Clone, Debug, Serialize, Deserialize)]
     pub enum ServerMessage {
         Write(CommandId),
-        Read(CommandId, Option<serde_json::Value>),
+        // 这里已经改成了 Option<String>，适配持久化存储
+        Read(CommandId, Option<String>), 
         StartSignal(Timestamp),
     }
 
@@ -45,14 +47,15 @@ pub mod messages {
 pub mod kv {
     use omnipaxos::{macros::Entry, storage::Snapshot};
     use serde::{Deserialize, Serialize};
-    use serde_json::Value;
     use std::collections::HashMap;
 
     pub type CommandId = usize;
     pub type ClientId = u64;
     pub type NodeId = omnipaxos::util::NodeId;
     pub type InstanceId = NodeId;
-    pub type KVValue = Value;
+    
+    // 【核心修改】：将 KVValue 从 Value 改为 String，避开 DeserializeAny 限制
+    pub type KVValue = String; 
 
     #[derive(Debug, Clone, Entry, Serialize, Deserialize)]
     pub struct Command {
@@ -102,30 +105,19 @@ pub mod kv {
                     KVCommand::Get(_) => {}
                 }
             }
-
             deleted_keys.retain(|k| !snapshotted.contains_key(k));
-
-            Self {
-                snapshotted,
-                deleted_keys,
-            }
+            Self { snapshotted, deleted_keys }
         }
 
         fn merge(&mut self, delta: Self) {
-            for (k, v) in delta.snapshotted {
-                self.snapshotted.insert(k, v);
-            }
-            for k in delta.deleted_keys {
-                self.snapshotted.remove(&k);
-            }
+            for (k, v) in delta.snapshotted { self.snapshotted.insert(k, v); }
+            for k in delta.deleted_keys { self.snapshotted.remove(&k); }
             self.deleted_keys.clear();
         }
 
-        fn use_snapshots() -> bool {
-            true
-        }
+        fn use_snapshots() -> bool { false }
     }
-}  
+}
         
     
 
