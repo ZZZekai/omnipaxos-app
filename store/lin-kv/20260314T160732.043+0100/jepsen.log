@@ -1,0 +1,1279 @@
+2026-03-14 16:07:32,118{GMT}	INFO	[jepsen test runner] jepsen.core: Test version 5375f5721267ace6490f96d18186c337a9262f51 (plus uncommitted changes)
+2026-03-14 16:07:32,118{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test -w lin-kv --bin "D:\\java tool\\IDEA project\\omnipaxos-app\\target\\debug\\maelstrom-kv.exe" --node-count 3 --concurrency 6 --time-limit 30 --rate 10 --nemesis partition
+2026-03-14 16:07:32,181{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:args []
+ :remote
+ #jepsen.control.retry.Remote{:remote #jepsen.control.scp.Remote{:cmd-remote #jepsen.control.sshj.SSHJRemote{:concurrency-limit 6,
+                                                                                                             :conn-spec nil,
+                                                                                                             :client nil,
+                                                                                                             :semaphore nil},
+                                                                 :conn-spec nil},
+                              :conn nil}
+ :log-net-send false
+ :node-count 3
+ :availability nil
+ :max-txn-length 4
+ :concurrency 6
+ :db
+ #object[maelstrom.db$db$reify__16612
+         "0x73534675"
+         "maelstrom.db$db$reify__16612@73534675"]
+ :max-writes-per-key 16
+ :leave-db-running? false
+ :name "lin-kv"
+ :logging-json? false
+ :start-time
+ #object[org.joda.time.DateTime "0x44cd3ea9" "2026-03-14T16:07:32.043+01:00"]
+ :nemesis-interval 10
+ :net
+ #object[maelstrom.net$jepsen_net$reify__15721
+         "0x352df548"
+         "maelstrom.net$jepsen_net$reify__15721@352df548"]
+ :client
+ #object[maelstrom.workload.lin_kv$client$reify__20973
+         "0x45dc4d1a"
+         "maelstrom.workload.lin_kv$client$reify__20973@45dc4d1a"]
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x4dbcc8ce"
+         "java.util.concurrent.CyclicBarrier@4dbcc8ce"]
+ :log-stderr false
+ :pure-generators true
+ :ssh {:dummy? true}
+ :rate 10.0
+ :checker
+ #object[jepsen.checker$compose$reify__11089
+         "0x60a98fa6"
+         "jepsen.checker$compose$reify__11089@60a98fa6"]
+ :argv
+ ("test"
+  "-w"
+  "lin-kv"
+  "--bin"
+  "D:\\java tool\\IDEA project\\omnipaxos-app\\target\\debug\\maelstrom-kv.exe"
+  "--node-count"
+  "3"
+  "--concurrency"
+  "6"
+  "--time-limit"
+  "30"
+  "--rate"
+  "10"
+  "--nemesis"
+  "partition")
+ :nemesis
+ (jepsen.nemesis.ReflCompose
+  {:fm {:start-partition 0,
+        :stop-partition 0,
+        :kill 1,
+        :start 1,
+        :pause 1,
+        :resume 1},
+   :nemeses [#unprintable "jepsen.nemesis.combined$partition_nemesis$reify__16905@3af4b14e"
+             #unprintable "jepsen.nemesis.combined$db_nemesis$reify__16886@1de78f97"]})
+ :nodes ["n0" "n1" "n2"]
+ :test-count 1
+ :latency {:mean 0, :dist :constant}
+ :bin
+ "D:\\java tool\\IDEA project\\omnipaxos-app\\target\\debug\\maelstrom-kv.exe"
+ :generator
+ #object[jepsen.util.Forgettable
+         "0x3fc261b7"
+         (jepsen.generator.TimeLimit
+          {:limit 30000000000,
+           :cutoff nil,
+           :gen (jepsen.generator.Any
+                 {:gens [(jepsen.generator.OnThreads
+                          {:f #{:nemesis},
+                           :context-filter #object[jepsen.generator.context$make_thread_filter$lazy_filter__12077
+                                                   "0x633e4742"
+                                                   "jepsen.generator.context$make_thread_filter$lazy_filter__12077@633e4742"],
+                           :gen (jepsen.generator.Stagger
+                                 {:dt 20000000000,
+                                  :next-time nil,
+                                  :gen (jepsen.generator.FlipFlop
+                                        {:gens [#object[jepsen.nemesis.combined$partition_package$start__16909
+                                                        "0x2bf83b29"
+                                                        "jepsen.nemesis.combined$partition_package$start__16909@2bf83b29"]
+                                                (jepsen.generator.Repeat
+                                                 {:remaining -1,
+                                                  :gen {:type :info,
+                                                        :f :stop-partition,
+                                                        :value nil}})],
+                                         :i 0})})})
+                         (jepsen.generator.OnThreads
+                          {:f #jepsen.generator.context.AllBut{:element :nemesis},
+                           :context-filter #object[jepsen.generator.context$make_thread_filter$lazy_filter__12077
+                                                   "0x25a2702c"
+                                                   "jepsen.generator.context$make_thread_filter$lazy_filter__12077@25a2702c"],
+                           :gen (jepsen.generator.Stagger
+                                 {:dt 200000000,
+                                  :next-time nil,
+                                  :gen (jepsen.generator.OnThreads
+                                        {:f #jepsen.generator.context.AllBut{:element :nemesis},
+                                         :context-filter #object[jepsen.generator.context$make_thread_filter$lazy_filter__12077
+                                                                 "0x23110196"
+                                                                 "jepsen.generator.context$make_thread_filter$lazy_filter__12077@23110196"],
+                                         :gen (jepsen.independent.ConcurrentGenerator
+                                               {:n 6,
+                                                :fgen #object[jepsen.tests.linearizable_register$test$fn__17385
+                                                              "0x328446e1"
+                                                              "jepsen.tests.linearizable_register$test$fn__17385@328446e1"],
+                                                :group->threads nil,
+                                                :thread->group nil,
+                                                :group->context-filter nil,
+                                                :keys (0 1 2 3 4 5 6 7 ...),
+                                                :gens nil})})})})]})})]
+ :log-net-recv false
+ :os
+ #object[maelstrom.net$jepsen_os$reify__15724
+         "0x6eda3ade"
+         "maelstrom.net$jepsen_os$reify__15724@6eda3ade"]
+ :time-limit 30
+ :workload :lin-kv
+ :consistency-models [:strict-serializable]
+ :topology :grid}
+
+2026-03-14 16:07:33,315{GMT}	INFO	[jepsen node n0] maelstrom.net: Starting Maelstrom network
+2026-03-14 16:07:33,318{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2026-03-14 16:07:33,318{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2026-03-14 16:07:33,318{GMT}	INFO	[jepsen node n1] maelstrom.db: Setting up n1
+2026-03-14 16:07:33,318{GMT}	INFO	[jepsen node n2] maelstrom.db: Setting up n2
+2026-03-14 16:07:33,318{GMT}	INFO	[jepsen node n1] maelstrom.process: launching D:\java tool\IDEA project\omnipaxos-app\target\debug\maelstrom-kv.exe []
+2026-03-14 16:07:33,322{GMT}	INFO	[jepsen node n0] maelstrom.service: Starting services: (lin-kv lin-tso lww-kv seq-kv)
+2026-03-14 16:07:33,318{GMT}	INFO	[jepsen node n2] maelstrom.process: launching D:\java tool\IDEA project\omnipaxos-app\target\debug\maelstrom-kv.exe []
+2026-03-14 16:07:33,323{GMT}	INFO	[jepsen node n0] maelstrom.db: Setting up n0
+2026-03-14 16:07:33,324{GMT}	INFO	[jepsen node n0] maelstrom.process: launching D:\java tool\IDEA project\omnipaxos-app\target\debug\maelstrom-kv.exe []
+2026-03-14 16:07:33,351{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2026-03-14 16:07:33,361{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start-partition	:majorities-ring
+2026-03-14 16:07:33,363{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:cas	[0 [1 4]]
+2026-03-14 16:07:33,363{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start-partition	[:isolated {"n2" #{"n1"}, "n1" #{"n0"}, "n0" #{"n2"}}]
+2026-03-14 16:07:33,417{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[0 nil]
+2026-03-14 16:07:33,600{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 16:07:33,714{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2026-03-14 16:07:33,902{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:cas	[0 [3 2]]
+2026-03-14 16:07:33,944{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:cas	[0 [4 2]]
+2026-03-14 16:07:34,367{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:info	:cas	[0 [1 4]]	:net-timeout
+2026-03-14 16:07:34,371{GMT}	INFO	[jepsen worker 3] jepsen.util: 9	:invoke	:write	[0 3]
+2026-03-14 16:07:34,422{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:34,564{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[0 nil]
+2026-03-14 16:07:34,613{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:34,618{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 16:07:34,723{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:34,797{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2026-03-14 16:07:34,906{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:info	:cas	[0 [3 2]]	:net-timeout
+2026-03-14 16:07:34,910{GMT}	INFO	[jepsen worker 5] jepsen.util: 11	:invoke	:cas	[0 [0 2]]
+2026-03-14 16:07:34,952{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:info	:cas	[0 [4 2]]	:net-timeout
+2026-03-14 16:07:35,051{GMT}	INFO	[jepsen worker 4] jepsen.util: 10	:invoke	:cas	[0 [2 3]]
+2026-03-14 16:07:35,376{GMT}	INFO	[jepsen worker 3] jepsen.util: 9	:info	:write	[0 3]	:net-timeout
+2026-03-14 16:07:35,384{GMT}	INFO	[jepsen worker 3] jepsen.util: 15	:invoke	:write	[0 4]
+2026-03-14 16:07:35,571{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:35,577{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[0 nil]
+2026-03-14 16:07:35,622{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:35,626{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 16:07:35,801{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:35,809{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2026-03-14 16:07:35,923{GMT}	INFO	[jepsen worker 5] jepsen.util: 11	:info	:cas	[0 [0 2]]	:net-timeout
+2026-03-14 16:07:36,010{GMT}	INFO	[jepsen worker 5] jepsen.util: 17	:invoke	:cas	[0 [3 3]]
+2026-03-14 16:07:36,056{GMT}	INFO	[jepsen worker 4] jepsen.util: 10	:info	:cas	[0 [2 3]]	:net-timeout
+2026-03-14 16:07:36,106{GMT}	INFO	[jepsen worker 4] jepsen.util: 16	:invoke	:cas	[0 [1 2]]
+2026-03-14 16:07:36,389{GMT}	INFO	[jepsen worker 3] jepsen.util: 15	:info	:write	[0 4]	:net-timeout
+2026-03-14 16:07:36,394{GMT}	INFO	[jepsen worker 3] jepsen.util: 21	:invoke	:cas	[0 [2 0]]
+2026-03-14 16:07:36,581{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:36,584{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[0 nil]
+2026-03-14 16:07:36,631{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:36,722{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 16:07:36,810{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:36,893{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2026-03-14 16:07:37,018{GMT}	INFO	[jepsen worker 5] jepsen.util: 17	:info	:cas	[0 [3 3]]	:net-timeout
+2026-03-14 16:07:37,022{GMT}	INFO	[jepsen worker 5] jepsen.util: 23	:invoke	:cas	[0 [0 3]]
+2026-03-14 16:07:37,114{GMT}	INFO	[jepsen worker 4] jepsen.util: 16	:info	:cas	[0 [1 2]]	:net-timeout
+2026-03-14 16:07:37,118{GMT}	INFO	[jepsen worker 4] jepsen.util: 22	:invoke	:write	[0 3]
+2026-03-14 16:07:37,401{GMT}	INFO	[jepsen worker 3] jepsen.util: 21	:info	:cas	[0 [2 0]]	:net-timeout
+2026-03-14 16:07:37,405{GMT}	INFO	[jepsen worker 3] jepsen.util: 27	:invoke	:cas	[0 [3 4]]
+2026-03-14 16:07:37,589{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:37,593{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[0 nil]
+2026-03-14 16:07:37,727{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:37,730{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 16:07:37,902{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:37,905{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2026-03-14 16:07:38,026{GMT}	INFO	[jepsen worker 5] jepsen.util: 23	:info	:cas	[0 [0 3]]	:net-timeout
+2026-03-14 16:07:38,026{GMT}	INFO	[jepsen worker 5] jepsen.util: 29	:invoke	:cas	[0 [2 4]]
+2026-03-14 16:07:38,126{GMT}	INFO	[jepsen worker 4] jepsen.util: 22	:info	:write	[0 3]	:net-timeout
+2026-03-14 16:07:38,126{GMT}	INFO	[jepsen worker 4] jepsen.util: 28	:invoke	:cas	[0 [1 3]]
+2026-03-14 16:07:38,414{GMT}	INFO	[jepsen worker 3] jepsen.util: 27	:info	:cas	[0 [3 4]]	:net-timeout
+2026-03-14 16:07:38,422{GMT}	INFO	[jepsen worker 3] jepsen.util: 33	:invoke	:cas	[0 [4 4]]
+2026-03-14 16:07:38,597{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:38,601{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[0 nil]
+2026-03-14 16:07:38,735{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:38,740{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2026-03-14 16:07:38,914{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:38,918{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2026-03-14 16:07:39,034{GMT}	INFO	[jepsen worker 5] jepsen.util: 29	:info	:cas	[0 [2 4]]	:net-timeout
+2026-03-14 16:07:39,101{GMT}	INFO	[jepsen worker 5] jepsen.util: 35	:invoke	:cas	[0 [3 0]]
+2026-03-14 16:07:39,130{GMT}	INFO	[jepsen worker 4] jepsen.util: 28	:info	:cas	[0 [1 3]]	:net-timeout
+2026-03-14 16:07:39,176{GMT}	INFO	[jepsen worker 4] jepsen.util: 34	:invoke	:cas	[1 [1 1]]
+2026-03-14 16:07:39,430{GMT}	INFO	[jepsen worker 3] jepsen.util: 33	:info	:cas	[0 [4 4]]	:net-timeout
+2026-03-14 16:07:39,440{GMT}	INFO	[jepsen worker 3] jepsen.util: 39	:invoke	:write	[1 4]
+2026-03-14 16:07:39,605{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:39,605{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:39,747{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:39,751{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:39,922{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	:net-timeout
+2026-03-14 16:07:39,926{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:40,105{GMT}	INFO	[jepsen worker 5] jepsen.util: 35	:info	:cas	[0 [3 0]]	:net-timeout
+2026-03-14 16:07:40,109{GMT}	INFO	[jepsen worker 5] jepsen.util: 41	:invoke	:cas	[1 [2 2]]
+2026-03-14 16:07:40,183{GMT}	INFO	[jepsen worker 4] jepsen.util: 34	:info	:cas	[1 [1 1]]	:net-timeout
+2026-03-14 16:07:40,185{GMT}	INFO	[jepsen worker 4] jepsen.util: 40	:invoke	:cas	[1 [2 1]]
+2026-03-14 16:07:40,443{GMT}	INFO	[jepsen worker 3] jepsen.util: 39	:info	:write	[1 4]	:net-timeout
+2026-03-14 16:07:40,451{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 0]
+2026-03-14 16:07:40,608{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[1 nil]	:net-timeout
+2026-03-14 16:07:40,613{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:40,758{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[1 nil]	:net-timeout
+2026-03-14 16:07:40,763{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:40,930{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[1 nil]	:net-timeout
+2026-03-14 16:07:40,934{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:41,038{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop-partition	nil
+2026-03-14 16:07:41,043{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop-partition	:network-healed
+2026-03-14 16:07:41,113{GMT}	INFO	[jepsen worker 5] jepsen.util: 41	:info	:cas	[1 [2 2]]	:net-timeout
+2026-03-14 16:07:41,113{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:write	[1 4]
+2026-03-14 16:07:41,134{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 0]
+2026-03-14 16:07:41,134{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 0]
+2026-03-14 16:07:41,134{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 0]
+2026-03-14 16:07:41,134{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:ok	:write	[1 4]
+2026-03-14 16:07:41,150{GMT}	WARN	[jepsen worker 4] jepsen.generator.interpreter: Process 40 crashed
+clojure.lang.ExceptionInfo: Malformed RPC response. Maelstrom sent node n1 the following request:
+
+{:key 1, :from 2, :to 1, :type "cas", :msg_id 7}
+
+And expected a response of the form:
+
+{:type (eq "cas_ok"), {:k :msg_id} Int, :in_reply_to Int}
+
+... but instead received
+
+{:in_reply_to 7, :msg_id 108, :type "read_ok", :value 4}
+
+This is malformed because:
+
+{:type (not (= "cas_ok" "read_ok")), :value disallowed-key}
+
+See doc/protocol.md for more guidance.
+	at slingshot.support$stack_trace.invoke(support.clj:201)
+	at maelstrom.client$check_body.invokeStatic(client.clj:188)
+	at maelstrom.client$check_body.invoke(client.clj:181)
+	at maelstrom.workload.lin_kv$fn__20962$cas_BANG___20963.invoke(lin_kv.clj:30)
+	at maelstrom.workload.lin_kv$client$reify__20973.invoke_BANG_(lin_kv.clj:66)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:87)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:65)
+	at jepsen.generator.interpreter$spawn_worker$fn__13749$fn__13750.invoke(interpreter.clj:140)
+	at jepsen.generator.interpreter$spawn_worker$fn__13749.invoke(interpreter.clj:123)
+	at clojure.core$binding_conveyor_fn$fn__5842.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2026-03-14 16:07:41,234{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:41,237{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:41,417{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 2]
+2026-03-14 16:07:41,430{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 2]
+2026-03-14 16:07:41,509{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:41,513{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:41,618{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[1 nil]	:net-timeout
+2026-03-14 16:07:41,655{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 3]]
+2026-03-14 16:07:41,659{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [2 3]]
+2026-03-14 16:07:41,843{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:cas	[1 [3 1]]
+2026-03-14 16:07:41,850{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:ok	:cas	[1 [3 1]]
+2026-03-14 16:07:42,030{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:42,037{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:42,109{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:42,116{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:42,292{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 4]
+2026-03-14 16:07:42,301{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 4]
+2026-03-14 16:07:42,304{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:42,308{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 4]
+2026-03-14 16:07:42,363{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:42,375{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 4]
+2026-03-14 16:07:42,400{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:42,409{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:42,580{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:write	[1 1]
+2026-03-14 16:07:42,584{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:ok	:write	[1 1]
+2026-03-14 16:07:42,733{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:42,733{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:42,888{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 4]]
+2026-03-14 16:07:42,896{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [1 4]]
+2026-03-14 16:07:43,046{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 1]]
+2026-03-14 16:07:43,054{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 1]]	[:precondition-failed "expected 0, got 4"]
+2026-03-14 16:07:43,130{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 4]]
+2026-03-14 16:07:43,134{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 4]]	[:precondition-failed "expected 2, got 4"]
+2026-03-14 16:07:43,213{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 2]]
+2026-03-14 16:07:43,217{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [4 2]]
+2026-03-14 16:07:43,225{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:43,235{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:43,425{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:write	[1 0]
+2026-03-14 16:07:43,438{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:ok	:write	[1 0]
+2026-03-14 16:07:43,446{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:write	[1 0]
+2026-03-14 16:07:43,448{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:ok	:write	[1 0]
+2026-03-14 16:07:43,505{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 3]]
+2026-03-14 16:07:43,512{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [1 3]]	[:precondition-failed "expected 1, got 0"]
+2026-03-14 16:07:43,621{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 4]
+2026-03-14 16:07:43,625{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 4]
+2026-03-14 16:07:43,813{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 4]]
+2026-03-14 16:07:43,817{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 4]]	[:precondition-failed "expected 0, got 4"]
+2026-03-14 16:07:43,934{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:43,941{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 4]
+2026-03-14 16:07:43,984{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:43,991{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:44,021{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:44,026{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:44,029{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:cas	[1 [3 1]]
+2026-03-14 16:07:44,029{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:fail	:cas	[1 [3 1]]	[:precondition-failed "expected 3, got 4"]
+2026-03-14 16:07:44,230{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 2]]
+2026-03-14 16:07:44,238{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 2]]	[:precondition-failed "expected 2, got 4"]
+2026-03-14 16:07:44,304{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:44,315{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:44,425{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:44,433{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 4]
+2026-03-14 16:07:44,584{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:44,600{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 4]
+2026-03-14 16:07:44,664{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:44,672{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:44,776{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:44,780{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:44,975{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:cas	[1 [2 1]]
+2026-03-14 16:07:44,984{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:fail	:cas	[1 [2 1]]	[:precondition-failed "expected 2, got 4"]
+2026-03-14 16:07:45,120{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 1]]
+2026-03-14 16:07:45,125{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [1 1]]	[:precondition-failed "expected 1, got 4"]
+2026-03-14 16:07:45,250{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:45,254{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:45,400{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:45,410{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 4]
+2026-03-14 16:07:45,529{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 3]
+2026-03-14 16:07:45,533{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 3]
+2026-03-14 16:07:45,659{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 2]]
+2026-03-14 16:07:45,663{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 2]]	[:precondition-failed "expected 2, got 3"]
+2026-03-14 16:07:45,729{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:45,737{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:45,829{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:write	[1 3]
+2026-03-14 16:07:45,837{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:ok	:write	[1 3]
+2026-03-14 16:07:45,962{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 3]]
+2026-03-14 16:07:45,967{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 3]]	[:precondition-failed "expected 0, got 3"]
+2026-03-14 16:07:45,979{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 0]
+2026-03-14 16:07:45,979{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 0]
+2026-03-14 16:07:46,174{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 3]]
+2026-03-14 16:07:46,179{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [0 3]]
+2026-03-14 16:07:46,250{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:46,258{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 3]
+2026-03-14 16:07:46,350{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:46,362{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:46,483{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:cas	[1 [4 3]]
+2026-03-14 16:07:46,487{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:fail	:cas	[1 [4 3]]	[:precondition-failed "expected 4, got 3"]
+2026-03-14 16:07:46,637{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:46,642{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:46,833{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [3 3]]
+2026-03-14 16:07:46,841{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [3 3]]
+2026-03-14 16:07:46,862{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:46,866{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:47,012{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:47,020{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 3]
+2026-03-14 16:07:47,175{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:47,183{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 3]
+2026-03-14 16:07:47,295{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 2]
+2026-03-14 16:07:47,300{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 2]
+2026-03-14 16:07:47,311{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:cas	[1 [0 1]]
+2026-03-14 16:07:47,312{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:fail	:cas	[1 [0 1]]	[:precondition-failed "expected 0, got 2"]
+2026-03-14 16:07:47,487{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:47,494{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:47,629{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 1]
+2026-03-14 16:07:47,633{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 1]
+2026-03-14 16:07:47,662{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:47,666{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:47,666{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:47,666{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 1]
+2026-03-14 16:07:47,821{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 4]]
+2026-03-14 16:07:47,828{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 4]]	[:precondition-failed "expected 2, got 1"]
+2026-03-14 16:07:47,992{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 3]]
+2026-03-14 16:07:47,996{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:47,999{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 3]]	[:precondition-failed "expected 0, got 1"]
+2026-03-14 16:07:47,999{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:48,193{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:48,199{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:48,270{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 0]]
+2026-03-14 16:07:48,278{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 0]]	[:precondition-failed "expected 4, got 1"]
+2026-03-14 16:07:48,470{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:48,480{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:48,480{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:48,482{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 1]
+2026-03-14 16:07:48,546{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:48,554{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 1]
+2026-03-14 16:07:48,575{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 2]]
+2026-03-14 16:07:48,579{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 2]]	[:precondition-failed "expected 2, got 1"]
+2026-03-14 16:07:48,750{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:cas	[1 [2 2]]
+2026-03-14 16:07:48,762{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:fail	:cas	[1 [2 2]]	[:precondition-failed "expected 2, got 1"]
+2026-03-14 16:07:48,875{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:48,883{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:48,971{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 0]]
+2026-03-14 16:07:48,979{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 0]]	[:precondition-failed "expected 4, got 1"]
+2026-03-14 16:07:49,071{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 3]
+2026-03-14 16:07:49,078{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 3]
+2026-03-14 16:07:49,267{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 1]
+2026-03-14 16:07:49,278{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 1]
+2026-03-14 16:07:49,341{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:49,345{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 1]
+2026-03-14 16:07:49,365{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 3]]
+2026-03-14 16:07:49,368{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [1 3]]
+2026-03-14 16:07:49,483{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:49,493{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:49,499{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:cas	[1 [4 1]]
+2026-03-14 16:07:49,503{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:fail	:cas	[1 [4 1]]	[:precondition-failed "expected 4, got 3"]
+2026-03-14 16:07:49,600{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:49,607{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:49,612{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:49,612{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:49,704{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:49,711{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 3]
+2026-03-14 16:07:49,900{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:49,907{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 3]
+2026-03-14 16:07:50,053{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 0]]
+2026-03-14 16:07:50,062{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [1 0]]	[:precondition-failed "expected 1, got 3"]
+2026-03-14 16:07:50,195{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:cas	[1 [1 4]]
+2026-03-14 16:07:50,199{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:fail	:cas	[1 [1 4]]	[:precondition-failed "expected 1, got 3"]
+2026-03-14 16:07:50,370{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:cas	[1 [1 4]]
+2026-03-14 16:07:50,382{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:fail	:cas	[1 [1 4]]	[:precondition-failed "expected 1, got 3"]
+2026-03-14 16:07:50,424{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 2]]
+2026-03-14 16:07:50,432{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 2]]	[:precondition-failed "expected 2, got 3"]
+2026-03-14 16:07:50,624{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:50,628{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:50,725{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:50,729{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 3]
+2026-03-14 16:07:50,774{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:50,779{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 3]
+2026-03-14 16:07:50,833{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 3]]
+2026-03-14 16:07:50,837{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 3]]	[:precondition-failed "expected 4, got 3"]
+2026-03-14 16:07:50,849{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:50,853{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:50,970{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:50,978{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:51,047{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 2]]
+2026-03-14 16:07:51,054{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 2]]	[:precondition-failed "expected 2, got 3"]
+2026-03-14 16:07:51,216{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 1]]
+2026-03-14 16:07:51,224{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 1]]	[:precondition-failed "expected 0, got 3"]
+2026-03-14 16:07:51,240{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:51,242{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 3]
+2026-03-14 16:07:51,316{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:51,328{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 3]
+2026-03-14 16:07:51,383{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:51,391{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:51,525{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:51,529{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:51,657{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:write	[1 0]
+2026-03-14 16:07:51,657{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:ok	:write	[1 0]
+2026-03-14 16:07:51,842{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 3]
+2026-03-14 16:07:51,850{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 3]
+2026-03-14 16:07:51,945{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 2]
+2026-03-14 16:07:51,945{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 2]
+2026-03-14 16:07:51,978{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:51,982{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 2]
+2026-03-14 16:07:52,002{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 2]]
+2026-03-14 16:07:52,002{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 2]]	[:precondition-failed "expected 4, got 2"]
+2026-03-14 16:07:52,174{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:52,179{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:52,182{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:52,186{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 2]
+2026-03-14 16:07:52,245{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:52,254{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:52,320{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 4]
+2026-03-14 16:07:52,330{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 4]
+2026-03-14 16:07:52,519{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:52,523{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:52,720{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 4]]
+2026-03-14 16:07:52,723{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [1 4]]	[:precondition-failed "expected 1, got 4"]
+2026-03-14 16:07:52,808{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [3 1]]
+2026-03-14 16:07:52,815{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [3 1]]	[:precondition-failed "expected 3, got 4"]
+2026-03-14 16:07:52,858{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 2]
+2026-03-14 16:07:52,862{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 2]
+2026-03-14 16:07:53,036{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:53,040{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:53,208{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:53,211{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:53,237{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 0]
+2026-03-14 16:07:53,243{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 0]
+2026-03-14 16:07:53,332{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:53,336{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 0]
+2026-03-14 16:07:53,370{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:53,374{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:07:53,382{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 0]
+2026-03-14 16:07:53,382{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 0]
+2026-03-14 16:07:53,482{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:53,485{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 0]
+2026-03-14 16:07:53,591{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:53,595{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 0]
+2026-03-14 16:07:53,783{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:write	[1 4]
+2026-03-14 16:07:53,786{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:ok	:write	[1 4]
+2026-03-14 16:07:53,970{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:53,976{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:54,087{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:54,092{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 4]
+2026-03-14 16:07:54,170{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 4]]
+2026-03-14 16:07:54,174{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [4 4]]
+2026-03-14 16:07:54,366{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 2]]
+2026-03-14 16:07:54,370{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:write	[1 3]
+2026-03-14 16:07:54,374{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 2]]	[:precondition-failed "expected 0, got 4"]
+2026-03-14 16:07:54,378{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:ok	:write	[1 3]
+2026-03-14 16:07:54,423{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:54,428{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:write	[1 2]
+2026-03-14 16:07:54,433{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:54,436{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:ok	:write	[1 2]
+2026-03-14 16:07:54,590{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 3]]
+2026-03-14 16:07:54,597{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 3]]	[:precondition-failed "expected 0, got 2"]
+2026-03-14 16:07:54,777{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:54,783{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:54,869{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:54,874{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 2]
+2026-03-14 16:07:55,015{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 1]]
+2026-03-14 16:07:55,020{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [2 1]]
+2026-03-14 16:07:55,174{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:55,179{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:55,336{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:55,345{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:55,499{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:55,505{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:55,507{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:55,511{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:55,637{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:55,643{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:55,716{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 1]]
+2026-03-14 16:07:55,719{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 1]]	[:precondition-failed "expected 0, got 1"]
+2026-03-14 16:07:55,903{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 1]]
+2026-03-14 16:07:55,907{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 1]]	[:precondition-failed "expected 2, got 1"]
+2026-03-14 16:07:56,074{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:56,078{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:56,094{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:56,099{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:56,265{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:56,273{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:56,425{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 4]
+2026-03-14 16:07:56,432{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 4]
+2026-03-14 16:07:56,552{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 4]]
+2026-03-14 16:07:56,557{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [4 4]]
+2026-03-14 16:07:56,710{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:56,715{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 4]
+2026-03-14 16:07:56,873{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 0]]
+2026-03-14 16:07:56,878{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 0]]	[:precondition-failed "expected 0, got 4"]
+2026-03-14 16:07:56,977{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 1]]
+2026-03-14 16:07:56,982{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:cas	[1 [4 1]]
+2026-03-14 16:07:57,081{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:write	[1 1]
+2026-03-14 16:07:57,090{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:ok	:write	[1 1]
+2026-03-14 16:07:57,145{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:57,152{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:57,181{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 0]]
+2026-03-14 16:07:57,186{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 0]]	[:precondition-failed "expected 4, got 1"]
+2026-03-14 16:07:57,348{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:57,360{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:57,415{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [3 0]]
+2026-03-14 16:07:57,423{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [3 0]]	[:precondition-failed "expected 3, got 1"]
+2026-03-14 16:07:57,566{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 2]
+2026-03-14 16:07:57,572{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 2]
+2026-03-14 16:07:57,598{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:57,602{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:57,686{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:57,694{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:57,871{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:57,878{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 2]
+2026-03-14 16:07:58,052{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 1]
+2026-03-14 16:07:58,060{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 1]
+2026-03-14 16:07:58,228{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 3]]
+2026-03-14 16:07:58,232{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 3]]	[:precondition-failed "expected 4, got 1"]
+2026-03-14 16:07:58,370{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:58,377{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 1]
+2026-03-14 16:07:58,523{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 1]]
+2026-03-14 16:07:58,531{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 1]]	[:precondition-failed "expected 4, got 1"]
+2026-03-14 16:07:58,677{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 1]]
+2026-03-14 16:07:58,682{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 1]]	[:precondition-failed "expected 4, got 1"]
+2026-03-14 16:07:58,869{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:58,875{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:58,889{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:58,893{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:59,015{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:59,019{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 1]
+2026-03-14 16:07:59,136{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 3]]
+2026-03-14 16:07:59,140{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 3]]	[:precondition-failed "expected 0, got 1"]
+2026-03-14 16:07:59,290{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:07:59,302{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 1]
+2026-03-14 16:07:59,368{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 3]]
+2026-03-14 16:07:59,377{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 3]]	[:precondition-failed "expected 4, got 1"]
+2026-03-14 16:07:59,479{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 4]]
+2026-03-14 16:07:59,485{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 4]]	[:precondition-failed "expected 4, got 1"]
+2026-03-14 16:07:59,582{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:cas	[1 [1 3]]
+2026-03-14 16:07:59,593{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:ok	:cas	[1 [1 3]]
+2026-03-14 16:07:59,657{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:07:59,661{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:07:59,748{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 0]]
+2026-03-14 16:07:59,756{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 0]]	[:precondition-failed "expected 4, got 3"]
+2026-03-14 16:07:59,873{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 3]]
+2026-03-14 16:07:59,878{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 3]]	[:precondition-failed "expected 0, got 3"]
+2026-03-14 16:08:00,060{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 0]]
+2026-03-14 16:08:00,065{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 0]]	[:precondition-failed "expected 0, got 3"]
+2026-03-14 16:08:00,153{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:08:00,157{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	[1 3]
+2026-03-14 16:08:00,202{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start-partition	:majority
+2026-03-14 16:08:00,207{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start-partition	[:isolated {"n2" #{"n1" "n0"}, "n1" #{"n2"}, "n0" #{"n2"}}]
+2026-03-14 16:08:00,281{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:cas	[1 [4 3]]
+2026-03-14 16:08:00,290{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:fail	:cas	[1 [4 3]]	[:precondition-failed "expected 4, got 3"]
+2026-03-14 16:08:00,318{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:invoke	:write	[1 0]
+2026-03-14 16:08:00,432{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:00,443{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:00,531{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 1]]
+2026-03-14 16:08:00,531{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [1 1]]	[:precondition-failed "expected 1, got 3"]
+2026-03-14 16:08:00,627{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [2 3]]
+2026-03-14 16:08:00,632{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [2 3]]	[:precondition-failed "expected 2, got 3"]
+2026-03-14 16:08:00,822{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:08:00,922{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 2]]
+2026-03-14 16:08:00,931{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 2]]	[:precondition-failed "expected 4, got 3"]
+2026-03-14 16:08:01,098{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:cas	[1 [2 3]]
+2026-03-14 16:08:01,106{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:fail	:cas	[1 [2 3]]	[:precondition-failed "expected 2, got 3"]
+2026-03-14 16:08:01,294{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:01,302{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:01,323{GMT}	INFO	[jepsen worker 5] jepsen.util: 47	:info	:write	[1 0]	:net-timeout
+2026-03-14 16:08:01,389{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [0 4]]
+2026-03-14 16:08:01,398{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [0 4]]	[:precondition-failed "expected 0, got 3"]
+2026-03-14 16:08:01,431{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:01,435{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:01,511{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 4]]
+2026-03-14 16:08:01,515{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [1 4]]	[:precondition-failed "expected 1, got 3"]
+2026-03-14 16:08:01,680{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [1 2]]
+2026-03-14 16:08:01,686{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [1 2]]	[:precondition-failed "expected 1, got 3"]
+2026-03-14 16:08:01,826{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[1 nil]	:net-timeout
+2026-03-14 16:08:01,860{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:01,865{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:01,956{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:invoke	:write	[1 0]
+2026-03-14 16:08:01,961{GMT}	INFO	[jepsen worker 4] jepsen.util: 46	:ok	:write	[1 0]
+2026-03-14 16:08:02,081{GMT}	INFO	[jepsen worker 5] jepsen.util: 53	:invoke	:cas	[1 [4 2]]
+2026-03-14 16:08:02,140{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:write	[1 3]
+2026-03-14 16:08:02,147{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:ok	:write	[1 3]
+2026-03-14 16:08:02,332{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:02,339{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:02,502{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:invoke	:cas	[1 [4 1]]
+2026-03-14 16:08:02,506{GMT}	INFO	[jepsen worker 3] jepsen.util: 45	:fail	:cas	[1 [4 1]]	[:precondition-failed "expected 4, got 3"]
+2026-03-14 16:08:02,681{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[1 nil]
+2026-03-14 16:08:02,698{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:02,701{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:02,748{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:02,752{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:02,876{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:02,881{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:02,965{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:02,968{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:03,085{GMT}	INFO	[jepsen worker 5] jepsen.util: 53	:info	:cas	[1 [4 2]]	:net-timeout
+2026-03-14 16:08:03,093{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:03,097{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:03,131{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[1 nil]
+2026-03-14 16:08:03,135{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	[1 3]
+2026-03-14 16:08:03,273{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[1 nil]
+2026-03-14 16:08:03,286{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[1 3]
+2026-03-14 16:08:03,690{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[1 nil]	:net-timeout
+2026-03-14 16:08:03,702{GMT}	INFO	[jepsen test runner] jepsen.core: Run complete, writing
+2026-03-14 16:08:03,743{GMT}	INFO	[jepsen node n0] maelstrom.db: Tearing down n0
+2026-03-14 16:08:03,743{GMT}	INFO	[jepsen node n1] maelstrom.db: Tearing down n1
+2026-03-14 16:08:03,743{GMT}	INFO	[jepsen node n2] maelstrom.db: Tearing down n2
+2026-03-14 16:08:04,433{GMT}	INFO	[jepsen node n0] maelstrom.net: Shutting down Maelstrom network
+2026-03-14 16:08:04,438{GMT}	INFO	[jepsen test runner] jepsen.core: Analyzing...
+2026-03-14 16:08:04,672{GMT}	INFO	[clojure-agent-send-pool-0] jepsen.independent: Wrote D:\java tool\IDEA project\omnipaxos-app\store\lin-kv\20260314T160732.043+0100\independent\0\results.edn
+2026-03-14 16:08:04,680{GMT}	INFO	[clojure-agent-send-pool-0] jepsen.independent: Wrote D:\java tool\IDEA project\omnipaxos-app\store\lin-kv\20260314T160732.043+0100\independent\0\history.edn
+2026-03-14 16:08:04,743{GMT}	INFO	[clojure-agent-send-pool-1] jepsen.independent: Wrote D:\java tool\IDEA project\omnipaxos-app\store\lin-kv\20260314T160732.043+0100\independent\1\results.edn
+2026-03-14 16:08:04,755{GMT}	INFO	[clojure-agent-send-pool-1] jepsen.independent: Wrote D:\java tool\IDEA project\omnipaxos-app\store\lin-kv\20260314T160732.043+0100\independent\1\history.edn
+2026-03-14 16:08:04,943{GMT}	INFO	[jepsen test runner] jepsen.core: Analysis complete
+2026-03-14 16:08:05,009{GMT}	INFO	[jepsen results] jepsen.store: Wrote D:\java tool\IDEA project\omnipaxos-app\store\lin-kv\20260314T160732.043+0100\results.edn
+2026-03-14 16:08:05,060{GMT}	INFO	[jepsen test runner] jepsen.core: {:perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :exceptions {:valid? true,
+              :exceptions ({:count 1,
+                            :class clojure.lang.ExceptionInfo,
+                            :example #jepsen.history.Op{:index 96,
+                                                        :time 7815411200,
+                                                        :type :info,
+                                                        :process 40,
+                                                        :f :cas,
+                                                        :value [1
+                                                                [2 1]],
+                                                        :exception {:via [{:type clojure.lang.ExceptionInfo,
+                                                                           :message "Malformed RPC response. Maelstrom sent node n1 the following request:\n\n{:key 1, :from 2, :to 1, :type \"cas\", :msg_id 7}\r\n\nAnd expected a response of the form:\n\n{:type (eq \"cas_ok\"), {:k :msg_id} Int, :in_reply_to Int}\r\n\n... but instead received\n\n{:in_reply_to 7, :msg_id 108, :type \"read_ok\", :value 4}\r\n\nThis is malformed because:\n\n{:type (not (= \"cas_ok\" \"read_ok\")), :value disallowed-key}\r\n\nSee doc/protocol.md for more guidance.",
+                                                                           :data {:type :malformed-rpc-response,
+                                                                                  :body {:in_reply_to 7,
+                                                                                         :msg_id 108,
+                                                                                         :type "read_ok",
+                                                                                         :value 4}},
+                                                                           :at [slingshot.support$stack_trace
+                                                                                invoke
+                                                                                "support.clj"
+                                                                                201]}],
+                                                                    :trace [[slingshot.support$stack_trace
+                                                                             invoke
+                                                                             "support.clj"
+                                                                             201]
+                                                                            [maelstrom.client$check_body
+                                                                             invokeStatic
+                                                                             "client.clj"
+                                                                             188]
+                                                                            [maelstrom.client$check_body
+                                                                             invoke
+                                                                             "client.clj"
+                                                                             181]
+                                                                            [maelstrom.workload.lin_kv$fn__20962$cas_BANG___20963
+                                                                             invoke
+                                                                             "lin_kv.clj"
+                                                                             30]
+                                                                            [maelstrom.workload.lin_kv$client$reify__20973
+                                                                             invoke_BANG_
+                                                                             "lin_kv.clj"
+                                                                             66]
+                                                                            [jepsen.client.Validate
+                                                                             invoke_BANG_
+                                                                             "client.clj"
+                                                                             87]
+                                                                            [jepsen.generator.interpreter.ClientWorker
+                                                                             invoke_BANG_
+                                                                             "interpreter.clj"
+                                                                             65]
+                                                                            [jepsen.generator.interpreter$spawn_worker$fn__13749$fn__13750
+                                                                             invoke
+                                                                             "interpreter.clj"
+                                                                             140]
+                                                                            [jepsen.generator.interpreter$spawn_worker$fn__13749
+                                                                             invoke
+                                                                             "interpreter.clj"
+                                                                             123]
+                                                                            [clojure.core$binding_conveyor_fn$fn__5842
+                                                                             invoke
+                                                                             "core.clj"
+                                                                             2047]
+                                                                            [clojure.lang.AFn
+                                                                             call
+                                                                             "AFn.java"
+                                                                             18]
+                                                                            [java.util.concurrent.FutureTask
+                                                                             run
+                                                                             "FutureTask.java"
+                                                                             264]
+                                                                            [java.util.concurrent.ThreadPoolExecutor
+                                                                             runWorker
+                                                                             "ThreadPoolExecutor.java"
+                                                                             1136]
+                                                                            [java.util.concurrent.ThreadPoolExecutor$Worker
+                                                                             run
+                                                                             "ThreadPoolExecutor.java"
+                                                                             635]
+                                                                            [java.lang.Thread
+                                                                             run
+                                                                             "Thread.java"
+                                                                             840]],
+                                                                    :cause "Malformed RPC response. Maelstrom sent node n1 the following request:\n\n{:key 1, :from 2, :to 1, :type \"cas\", :msg_id 7}\r\n\nAnd expected a response of the form:\n\n{:type (eq \"cas_ok\"), {:k :msg_id} Int, :in_reply_to Int}\r\n\n... but instead received\n\n{:in_reply_to 7, :msg_id 108, :type \"read_ok\", :value 4}\r\n\nThis is malformed because:\n\n{:type (not (= \"cas_ok\" \"read_ok\")), :value disallowed-key}\r\n\nSee doc/protocol.md for more guidance.",
+                                                                    :data {:type :malformed-rpc-response,
+                                                                           :body {:in_reply_to 7,
+                                                                                  :msg_id 108,
+                                                                                  :type "read_ok",
+                                                                                  :value 4}}},
+                                                        :error "indeterminate: Malformed RPC response. Maelstrom sent node n1 the following request:\n\n{:key 1, :from 2, :to 1, :type \"cas\", :msg_id 7}\r\n\nAnd expected a response of the form:\n\n{:type (eq \"cas_ok\"), {:k :msg_id} Int, :in_reply_to Int}\r\n\n... but instead received\n\n{:in_reply_to 7, :msg_id 108, :type \"read_ok\", :value 4}\r\n\nThis is malformed because:\n\n{:type (not (= \"cas_ok\" \"read_ok\")), :value disallowed-key}\r\n\nSee doc/protocol.md for more guidance."}})},
+ :stats {:valid? true,
+         :count 245,
+         :ok-count 144,
+         :fail-count 78,
+         :info-count 23,
+         :by-f {:cas {:valid? true,
+                      :count 84,
+                      :ok-count 12,
+                      :fail-count 54,
+                      :info-count 18},
+                :read {:valid? true,
+                       :count 126,
+                       :ok-count 102,
+                       :fail-count 24,
+                       :info-count 0},
+                :write {:valid? true,
+                        :count 35,
+                        :ok-count 30,
+                        :fail-count 0,
+                        :info-count 5}}},
+ :availability {:valid? true, :ok-fraction 0.5877551},
+ :net {:all {:send-count 10418,
+             :recv-count 5288,
+             :msg-count 10418,
+             :msgs-per-op 42.52245},
+       :clients {:send-count 470, :recv-count 470, :msg-count 470},
+       :servers {:send-count 9948,
+                 :recv-count 4818,
+                 :msg-count 9948,
+                 :msgs-per-op 40.60408},
+       :valid? true},
+ :workload {:valid? true,
+            :results {0 {:linearizable {:valid? true,
+                                        :configs ({:model #knossos.model.CASRegister{:value nil},
+                                                   :last-op nil,
+                                                   :pending [{:process 3,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      4],
+                                                              :index 0,
+                                                              :time 6603700}
+                                                             {:process 4,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 7,
+                                                              :time 593159200}
+                                                             {:process 5,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [3
+                                                                      2],
+                                                              :index 6,
+                                                              :time 550325500}
+                                                             {:process 9,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 3,
+                                                              :index 9,
+                                                              :time 1018240400}
+                                                             {:process 10,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      3],
+                                                              :index 19,
+                                                              :time 1700885100}
+                                                             {:process 11,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [0
+                                                                      2],
+                                                              :index 17,
+                                                              :time 1556756800}
+                                                             {:process 15,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 21,
+                                                              :time 2027382500}
+                                                             {:process 16,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      2],
+                                                              :index 31,
+                                                              :time 2755534900}
+                                                             {:process 17,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [3
+                                                                      3],
+                                                              :index 29,
+                                                              :time 2659455800}
+                                                             {:process 21,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      0],
+                                                              :index 33,
+                                                              :time 3039653700}
+                                                             {:process 22,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 3,
+                                                              :index 43,
+                                                              :time 3764255000}
+                                                             {:process 23,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [0
+                                                                      3],
+                                                              :index 41,
+                                                              :time 3668689600}
+                                                             {:process 27,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [3
+                                                                      4],
+                                                              :index 45,
+                                                              :time 4052244800}
+                                                             {:process 28,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      3],
+                                                              :index 55,
+                                                              :time 4776008900}
+                                                             {:process 29,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      4],
+                                                              :index 53,
+                                                              :time 4675520100}
+                                                             {:process 33,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      4],
+                                                              :index 57,
+                                                              :time 5063856600}
+                                                             {:process 35,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [3
+                                                                      0],
+                                                              :index 65,
+                                                              :time 5750001000}]}),
+                                        :final-paths ()},
+                         :timeline {:valid? true},
+                         :valid? true},
+                      1 {:linearizable {:valid? true,
+                                        :configs ({:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 39,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 69,
+                                                              :time 6080313600}
+                                                             {:process 47,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 0,
+                                                              :index 444,
+                                                              :time 26967786800}
+                                                             {:process 53,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 472,
+                                                              :time 28730048400}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 40,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      1],
+                                                              :index 79,
+                                                              :time 6833393300}
+                                                             {:process 41,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      2],
+                                                              :index 77,
+                                                              :time 6755321300}
+                                                             {:process 53,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 472,
+                                                              :time 28730048400}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 40,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      1],
+                                                              :index 79,
+                                                              :time 6833393300}
+                                                             {:process 41,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      2],
+                                                              :index 77,
+                                                              :time 6755321300}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 39,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 69,
+                                                              :time 6080313600}
+                                                             {:process 40,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      1],
+                                                              :index 79,
+                                                              :time 6833393300}
+                                                             {:process 41,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      2],
+                                                              :index 77,
+                                                              :time 6755321300}
+                                                             {:process 47,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 0,
+                                                              :index 444,
+                                                              :time 26967786800}
+                                                             {:process 53,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 472,
+                                                              :time 28730048400}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 34,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      1],
+                                                              :index 67,
+                                                              :time 5825518900}
+                                                             {:process 39,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 69,
+                                                              :time 6080313600}
+                                                             {:process 41,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      2],
+                                                              :index 77,
+                                                              :time 6755321300}
+                                                             {:process 47,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 0,
+                                                              :index 444,
+                                                              :time 26967786800}
+                                                             {:process 53,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 472,
+                                                              :time 28730048400}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 39,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 69,
+                                                              :time 6080313600}
+                                                             {:process 40,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      1],
+                                                              :index 79,
+                                                              :time 6833393300}
+                                                             {:process 47,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 0,
+                                                              :index 444,
+                                                              :time 26967786800}
+                                                             {:process 53,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 472,
+                                                              :time 28730048400}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 34,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      1],
+                                                              :index 67,
+                                                              :time 5825518900}
+                                                             {:process 39,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 69,
+                                                              :time 6080313600}
+                                                             {:process 40,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      1],
+                                                              :index 79,
+                                                              :time 6833393300}
+                                                             {:process 41,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      2],
+                                                              :index 77,
+                                                              :time 6755321300}
+                                                             {:process 47,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 0,
+                                                              :index 444,
+                                                              :time 26967786800}
+                                                             {:process 53,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 472,
+                                                              :time 28730048400}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 34,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      1],
+                                                              :index 67,
+                                                              :time 5825518900}
+                                                             {:process 39,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 69,
+                                                              :time 6080313600}
+                                                             {:process 47,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 0,
+                                                              :index 444,
+                                                              :time 26967786800}
+                                                             {:process 53,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 472,
+                                                              :time 28730048400}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 34,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      1],
+                                                              :index 67,
+                                                              :time 5825518900}
+                                                             {:process 39,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 69,
+                                                              :time 6080313600}
+                                                             {:process 40,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      1],
+                                                              :index 79,
+                                                              :time 6833393300}
+                                                             {:process 53,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [4
+                                                                      2],
+                                                              :index 472,
+                                                              :time 28730048400}]}
+                                                  {:model #knossos.model.CASRegister{:value 3},
+                                                   :last-op {:process 0,
+                                                             :type :ok,
+                                                             :f :read,
+                                                             :value 3,
+                                                             :index 494,
+                                                             :time 29936432600},
+                                                   :pending [{:process 34,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      1],
+                                                              :index 67,
+                                                              :time 5825518900}
+                                                             {:process 40,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      1],
+                                                              :index 79,
+                                                              :time 6833393300}
+                                                             {:process 41,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      2],
+                                                              :index 77,
+                                                              :time 6755321300}
+                                                             {:process 47,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 0,
+                                                              :index 444,
+                                                              :time 26967786800}]}),
+                                        :final-paths ()},
+                         :timeline {:valid? true},
+                         :valid? true}},
+            :failures []},
+ :valid? true}
+
+
+Everything looks good! йc(бой``)е╬

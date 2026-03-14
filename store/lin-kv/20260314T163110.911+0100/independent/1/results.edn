@@ -1,0 +1,150 @@
+{:linearizable
+ {:valid? true,
+  :configs
+  ({:model {:value 4},
+    :last-op
+    {:process 35,
+     :type :ok,
+     :f :write,
+     :value 4,
+     :index 525,
+     :time 29947890600},
+    :pending
+    [{:process 40,
+      :type :invoke,
+      :f :cas,
+      :value [1 1],
+      :index 456,
+      :time 26608729500}
+     {:process 52,
+      :type :invoke,
+      :f :cas,
+      :value [2 3],
+      :index 511,
+      :time 29188598800}]}
+   {:model {:value 4},
+    :last-op
+    {:process 35,
+     :type :ok,
+     :f :write,
+     :value 4,
+     :index 525,
+     :time 29947890600},
+    :pending []}
+   {:model {:value 4},
+    :last-op
+    {:process 35,
+     :type :ok,
+     :f :write,
+     :value 4,
+     :index 525,
+     :time 29947890600},
+    :pending
+    [{:process 52,
+      :type :invoke,
+      :f :cas,
+      :value [2 3],
+      :index 511,
+      :time 29188598800}]}
+   {:model {:value 4},
+    :last-op
+    {:process 35,
+     :type :ok,
+     :f :write,
+     :value 4,
+     :index 525,
+     :time 29947890600},
+    :pending
+    [{:process 40,
+      :type :invoke,
+      :f :cas,
+      :value [1 1],
+      :index 456,
+      :time 26608729500}]}
+   {:model {:value 4},
+    :last-op
+    {:process 35,
+     :type :ok,
+     :f :write,
+     :value 4,
+     :index 525,
+     :time 29947890600},
+    :pending
+    [{:process 46,
+      :type :invoke,
+      :f :write,
+      :value 4,
+      :index 483,
+      :time 27707784600}]}
+   {:model {:value 4},
+    :last-op
+    {:process 35,
+     :type :ok,
+     :f :write,
+     :value 4,
+     :index 525,
+     :time 29947890600},
+    :pending
+    [{:process 40,
+      :type :invoke,
+      :f :cas,
+      :value [1 1],
+      :index 456,
+      :time 26608729500}
+     {:process 46,
+      :type :invoke,
+      :f :write,
+      :value 4,
+      :index 483,
+      :time 27707784600}
+     {:process 52,
+      :type :invoke,
+      :f :cas,
+      :value [2 3],
+      :index 511,
+      :time 29188598800}]}
+   {:model {:value 4},
+    :last-op
+    {:process 35,
+     :type :ok,
+     :f :write,
+     :value 4,
+     :index 525,
+     :time 29947890600},
+    :pending
+    [{:process 40,
+      :type :invoke,
+      :f :cas,
+      :value [1 1],
+      :index 456,
+      :time 26608729500}
+     {:process 46,
+      :type :invoke,
+      :f :write,
+      :value 4,
+      :index 483,
+      :time 27707784600}]}
+   {:model {:value 4},
+    :last-op
+    {:process 35,
+     :type :ok,
+     :f :write,
+     :value 4,
+     :index 525,
+     :time 29947890600},
+    :pending
+    [{:process 46,
+      :type :invoke,
+      :f :write,
+      :value 4,
+      :index 483,
+      :time 27707784600}
+     {:process 52,
+      :type :invoke,
+      :f :cas,
+      :value [2 3],
+      :index 511,
+      :time 29188598800}]}),
+  :final-paths ()},
+ :timeline {:valid? true},
+ :valid? true}

@@ -6,14 +6,15 @@ use omnipaxos::{
     ServerConfig as OmniServerConfig,
 };
 use omnipaxos_kv::common::kv::{Command, CommandId, KVCommand, NodeId};
-use omnipaxos_storage::persistent_storage::{PersistentStorage, PersistentStorageConfig};
+use omnipaxos_storage::memory_storage::MemoryStorage;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
+use std::fs;
 use std::io::{self, BufRead, Write};
+use std::path::PathBuf;
 
-// ★ 改为 PersistentStorage
-type OmniPaxosInstance = OmniPaxos<Command, PersistentStorage<Command>>;
+type OmniPaxosInstance = OmniPaxos<Command, MemoryStorage<Command>>;
 
 const LEADER_NAME: &str = "n0";
 
@@ -22,6 +23,49 @@ struct Message {
     src: String,
     dest: String,
     body: Value,
+}
+
+// ★ 持久化日志：把已决议的 Command 序列化写到文件
+struct PersistentLog {
+    path: PathBuf,
+}
+
+impl PersistentLog {
+    fn new(node_id: &str) -> Self {
+        let path = PathBuf::from(format!(
+            "D:\\java tool\\IDEA project\\omnipaxos-app\\target\\debug\\storage_{}\\decided_log.jsonl",
+            node_id
+        ));
+        if let Some(parent) = path.parent() {
+            fs::create_dir_all(parent).expect("failed to create storage dir");
+        }
+        eprintln!("PersistentLog path: {:?}", path); // 调试输出
+        Self { path }
+    }
+
+    // 追加一条已决议的命令到文件
+    fn append(&self, cmd: &Command) {
+        let line = serde_json::to_string(cmd).expect("serialize Command failed");
+        let mut file = fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(&self.path)
+            .expect("open persistent log failed");
+        writeln!(file, "{}", line).expect("write persistent log failed");
+    }
+
+    // 启动时读回所有已决议的命令
+    fn load(&self) -> Vec<Command> {
+        if !self.path.exists() {
+            return vec![];
+        }
+        let content = fs::read_to_string(&self.path).unwrap_or_default();
+        content
+            .lines()
+            .filter(|l| !l.trim().is_empty())
+            .filter_map(|l| serde_json::from_str::<Command>(l).ok())
+            .collect()
+    }
 }
 
 #[derive(Default)]
@@ -83,6 +127,7 @@ struct Node {
     command_counter: u64,
     current_decided_idx: usize,
     db: Database,
+    persistent_log: Option<PersistentLog>, // ★ 新增
     omnipaxos: Option<OmniPaxosInstance>,
     leader_started: bool,
     pending_commands: HashMap<CommandId, PendingTarget>,
@@ -98,6 +143,7 @@ impl Node {
             command_counter: 0,
             current_decided_idx: 0,
             db: Database::default(),
+            persistent_log: None,
             omnipaxos: None,
             leader_started: false,
             pending_commands: HashMap::new(),
@@ -171,7 +217,6 @@ impl Node {
         self.id == LEADER_NAME
     }
 
-    // ★ 核心改动：使用 PersistentStorage，路径按节点 ID 区分
     fn init_omnipaxos(&mut self, all_node_names: &[String]) {
         let nodes: Vec<NodeId> = all_node_names
             .iter()
@@ -192,47 +237,27 @@ impl Node {
             server_config,
         };
 
-        // ★ 每个节点用独立路径存储，重启后自动恢复
-        let storage_path = format!("./storage_{}", self.id);
-        eprintln!("{}: using persistent storage at {}", self.id, storage_path);
-        let storage_config = PersistentStorageConfig::with(storage_path);
-        let storage = PersistentStorage::open(storage_config);
+        // ★ 初始化持久化日志
+        let plog = PersistentLog::new(&self.id);
 
+        // ★ 从文件恢复：重放历史命令重建内存 DB
+        let past_commands = plog.load();
+        let recovered_count = past_commands.len();
+        for cmd in past_commands {
+            self.db.apply(cmd.kv_cmd);
+        }
+        self.current_decided_idx = recovered_count;
+        eprintln!(
+            "{}: recovered {} commands from persistent log",
+            self.id, recovered_count
+        );
+
+        self.persistent_log = Some(plog);
+
+        // MemoryStorage 仍然用于 OmniPaxos 内部共识
+        let storage: MemoryStorage<Command> = MemoryStorage::default();
         let op = config.build(storage).expect("failed to build OmniPaxos");
         self.omnipaxos = Some(op);
-
-        // ★ 重启后从 log 重放已决议的命令，重建内存数据库
-        self.recover_db_from_log();
-    }
-
-    // ★ 新增：重放 log 重建 DB（重启恢复用）
-    fn recover_db_from_log(&mut self) {
-        let op = self.omnipaxos.as_mut().expect("OmniPaxos not initialized");
-        let decided_idx = op.get_decided_idx();
-
-        if decided_idx == 0 {
-            eprintln!("{}: fresh start, no log to recover", self.id);
-            return;
-        }
-
-        eprintln!("{}: recovering {} decided entries from log", self.id, decided_idx);
-
-        let entries = match op.read_decided_suffix(0) {
-            Some(e) => e,
-            None => {
-                eprintln!("{}: read_decided_suffix(0) returned None", self.id);
-                return;
-            }
-        };
-
-        for entry in entries {
-            if let LogEntry::Decided(cmd) = entry {
-                self.db.apply(cmd.kv_cmd);
-            }
-        }
-
-        self.current_decided_idx = decided_idx;
-        eprintln!("{}: recovery complete, decided_idx={}", self.id, decided_idx);
     }
 
     fn start_leader_once(&mut self) {
@@ -273,11 +298,9 @@ impl Node {
         if self.is_leader_node() {
             self.ensure_leader_ready();
         }
-
         if let Some(op) = self.omnipaxos.as_mut() {
             op.tick();
         }
-
         self.flush_outgoing(out);
         self.handle_decided_entries(out);
     }
@@ -379,6 +402,11 @@ impl Node {
                 LogEntry::Decided(cmd) => cmd,
                 _ => continue,
             };
+
+            // ★ 写入持久化文件
+            if let Some(plog) = &self.persistent_log {
+                plog.append(&command);
+            }
 
             let result = self.db.apply(command.kv_cmd);
 

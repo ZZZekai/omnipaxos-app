@@ -14,7 +14,7 @@ tokio-serde = { version = "0.8.0", features = ["bincode"] }
 tokio-util = { version = "0.7.10", features = ["codec"] }
 omnipaxos = { git = "https://github.com/haraldng/omnipaxos.git", features = ["serde", "toml_config"] }
 # ★ 加上 sled feature 以启用持久化存储
-omnipaxos_storage = { git = "https://github.com/haraldng/omnipaxos.git", features = ["persistent_storage"] }
+omnipaxos_storage = { git = "https://github.com/haraldng/omnipaxos.git" }
 chrono = "0.4.34"
 rand = "0.8.5"
 csv = "1.3.1"
