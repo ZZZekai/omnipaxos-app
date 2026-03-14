@@ -1,9 +1,8 @@
 use omnipaxos_kv::common::kv::KVCommand;
-use serde_json::Value;
 use std::collections::HashMap;
 
 pub struct Database {
-    db: HashMap<String, Value>,
+    db: HashMap<String, String>,
 }
 
 impl Database {
@@ -11,7 +10,7 @@ impl Database {
         Self { db: HashMap::new() }
     }
 
-    pub fn handle_command(&mut self, command: KVCommand) -> Option<Option<Value>> {
+    pub fn handle_command(&mut self, command: KVCommand) -> Option<Option<String>> {
         match command {
             KVCommand::Put(key, value) => {
                 self.db.insert(key, value);
@@ -21,16 +20,7 @@ impl Database {
                 self.db.remove(&key);
                 None
             }
-            KVCommand::Get(key) => Some(self.db.get(&key).cloned()),
-            KVCommand::Cas(key, expected, new_value) => {
-                match self.db.get(&key) {
-                    Some(current) if *current == expected => {
-                        self.db.insert(key, new_value);
-                    }
-                    _ => {}
-                }
-                None
-            }
+            KVCommand::Get(key) => Some(self.db.get(&key).map(|v| v.clone())),
         }
     }
 }
