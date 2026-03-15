@@ -16,7 +16,7 @@ use std::path::PathBuf;
 
 type OmniPaxosInstance = OmniPaxos<Command, MemoryStorage<Command>>;
 
-const LEADER_NAME: &str = "n0";
+// ★ leader 不再硬编码，改为动态查询 OmniPaxos
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct Message {
@@ -127,9 +127,10 @@ struct Node {
     command_counter: u64,
     current_decided_idx: usize,
     db: Database,
-    persistent_log: Option<PersistentLog>, // ★ 新增
+    persistent_log: Option<PersistentLog>,
     omnipaxos: Option<OmniPaxosInstance>,
     leader_started: bool,
+    current_leader: Option<String>, // ★ 动态 leader
     pending_commands: HashMap<CommandId, PendingTarget>,
     pending_client_replies: HashMap<u64, Message>,
 }
@@ -146,6 +147,7 @@ impl Node {
             persistent_log: None,
             omnipaxos: None,
             leader_started: false,
+            current_leader: None, // ★ 初始未知
             pending_commands: HashMap::new(),
             pending_client_replies: HashMap::new(),
         }
@@ -214,7 +216,23 @@ impl Node {
     }
 
     fn is_leader_node(&self) -> bool {
-        self.id == LEADER_NAME
+        // ★ 动态查询 OmniPaxos 当前 leader
+        if let Some(op) = &self.omnipaxos {
+            matches!(op.get_current_leader(), Some((leader, true)) if leader == self.pid)
+        } else {
+            false
+        }
+    }
+
+    // ★ 获取当前 leader 的节点名，用于 proxy
+    fn get_leader_name(&self) -> Option<String> {
+        if let Some(op) = &self.omnipaxos {
+            if let Some((leader_pid, true)) = op.get_current_leader() {
+                return Some(Self::pid_to_node_name(leader_pid));
+            }
+        }
+        // fallback: 用缓存的 leader
+        self.current_leader.clone()
     }
 
     fn init_omnipaxos(&mut self, all_node_names: &[String]) {
@@ -466,15 +484,23 @@ impl Node {
             let origin_req_id = msg.body["msg_id"]
                 .as_u64()
                 .expect("client request must have numeric msg_id");
-            self.pending_client_replies.insert(origin_req_id, msg.clone());
 
-            let proxy_body = serde_json::json!({
-                "type": "proxy_req",
-                "origin": self.id,
-                "origin_req_id": origin_req_id,
-                "request_body": msg.body
-            });
-            self.send_node_message(LEADER_NAME, proxy_body, out);
+            // ★ 动态获取 leader，如果不知道 leader 则返回 error 让 Maelstrom 标记为 indeterminate
+            if let Some(leader_name) = self.get_leader_name() {
+                self.pending_client_replies.insert(origin_req_id, msg.clone());
+                let proxy_body = serde_json::json!({
+                    "type": "proxy_req",
+                    "origin": self.id,
+                    "origin_req_id": origin_req_id,
+                    "request_body": msg.body
+                });
+                self.send_node_message(&leader_name, proxy_body, out);
+            } else {
+                // leader 未知（选举中），返回临时错误，Maelstrom 会重试
+                eprintln!("{}: leader unknown, rejecting request temporarily", self.id);
+                let body = Self::error_body(11, "leader unknown, please retry");
+                self.reply(&msg, body, out);
+            }
         }
     }
 
