@@ -225,14 +225,14 @@ impl Node {
     }
 
     // ★ 获取当前 leader 的节点名，用于 proxy
-    fn get_leader_name(&self) -> Option<String> {
+    fn get_leader_name(&self) -> String {
         if let Some(op) = &self.omnipaxos {
             if let Some((leader_pid, true)) = op.get_current_leader() {
-                return Some(Self::pid_to_node_name(leader_pid));
+                return Self::pid_to_node_name(leader_pid);
             }
         }
-        // fallback: 用缓存的 leader
-        self.current_leader.clone()
+        // fallback: 用缓存的 leader，或默认 n0
+        self.current_leader.clone().unwrap_or_else(|| "n0".to_string())
     }
 
     fn init_omnipaxos(&mut self, all_node_names: &[String]) {
@@ -279,7 +279,7 @@ impl Node {
     }
 
     fn start_leader_once(&mut self) {
-        if self.is_leader_node() && !self.leader_started {
+        if self.id == "n0" && !self.leader_started {
             if let Some(op) = self.omnipaxos.as_mut() {
                 op.try_become_leader();
             }
@@ -485,29 +485,23 @@ impl Node {
                 .as_u64()
                 .expect("client request must have numeric msg_id");
 
-            // ★ 动态获取 leader，如果不知道 leader 则返回 error 让 Maelstrom 标记为 indeterminate
-            if let Some(leader_name) = self.get_leader_name() {
-                self.pending_client_replies.insert(origin_req_id, msg.clone());
-                let proxy_body = serde_json::json!({
-                    "type": "proxy_req",
-                    "origin": self.id,
-                    "origin_req_id": origin_req_id,
-                    "request_body": msg.body
-                });
-                self.send_node_message(&leader_name, proxy_body, out);
-            } else {
-                // leader 未知（选举中），返回临时错误，Maelstrom 会重试
-                eprintln!("{}: leader unknown, rejecting request temporarily", self.id);
-                let body = Self::error_body(11, "leader unknown, please retry");
-                self.reply(&msg, body, out);
-            }
+            // ★ 动态获取 leader，fallback 到 n0
+            let leader_name = self.get_leader_name();
+            self.pending_client_replies.insert(origin_req_id, msg.clone());
+            let proxy_body = serde_json::json!({
+                "type": "proxy_req",
+                "origin": self.id,
+                "origin_req_id": origin_req_id,
+                "request_body": msg.body
+            });
+            self.send_node_message(&leader_name, proxy_body, out);
         }
     }
 
     fn handle_proxy_req(&mut self, msg: Message, out: &mut impl Write) {
-        if !self.is_leader_node() {
-            return;
-        }
+//         if !self.is_leader_node() {
+//             return;
+//         }
 
         let origin = msg.body["origin"]
             .as_str()
